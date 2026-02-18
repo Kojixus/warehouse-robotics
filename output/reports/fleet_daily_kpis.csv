@@ -1,2 +1,0 @@
-fleet_size,shift_minutes,work_min_total,idle_min_total,charge_min_total,fault_min_total,utilization_pct,downtime_pct,charging_pct,tasks_per_hour_proxy,faults_per_robot,mttr_min
-10,480,940,3299,505,56,19.583333333333332,1.1666666666666665,10.520833333333332,1.575,0.7,5.6
