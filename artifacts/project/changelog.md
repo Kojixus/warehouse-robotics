@@ -10,6 +10,22 @@ This project uses a practical semantic versioning approach:
 
 ---
 
+## [v1.4.1] - 2026-02-18
+
+### Fixed
+
+- **Robot log alignment across pipelines**
+  - `src/control_tower/run_control_tower.py` now writes robot logs to both:
+    - `output/control_tower_data/simulated/robot_logs.csv`
+    - `data/simulated/robot_logs.csv` (canonical path for downstream consumers)
+  - `src/audit_ready/run_audit_pack.py` now resolves robot logs from compatible locations:
+    - `data/simulated/robot_logs.csv`
+    - `output/control_tower_data/simulated/robot_logs.csv`
+    - `output/simulated/robot_logs.csv` (legacy fallback)
+  - Audit evidence inputs now include the resolved robot log file path when present.
+
+---
+
 ## [v1.4] - 2026-02-18
 
 ### Added
