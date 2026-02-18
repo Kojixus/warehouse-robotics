@@ -8,9 +8,9 @@ Warehouse travel time, slotting, and robotics reliability are major factors of c
 
 Create a demo-ready “Warehouse Robotics Efficiency Program” consisting of three workstreams:
 
-1) Pick Path Optimization (reduce travel distance)
-2) Slotting & Layout Strategy (increase picks from prime locations; reduce travel time)
-3) Robotics Operations Control Tower (monitor utilization/downtime; generate alerts)
+1. Pick Path Optimization (reduce travel distance)
+2. Slotting & Layout Strategy (increase picks from prime locations; reduce travel time)
+3. Robotics Operations Control Tower (monitor utilization/downtime; generate alerts)
 
 ## Project Scope
 
