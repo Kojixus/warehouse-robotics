@@ -20,7 +20,7 @@ DATA_DIR = PROJECT_ROOT / "data" / "simulated"
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
 
-def ensure_dirs():
+def ensure_dirs() -> None:
     os.makedirs(OUTPUT_DIR / "reports", exist_ok=True)
     os.makedirs(OUTPUT_DIR / "charts", exist_ok=True)
 
