@@ -10,6 +10,33 @@ This project uses a practical semantic versioning approach:
 
 ---
 
+## [v1.4] - 2026-02-18
+
+### Added
+
+- **Week 5: Audit-Ready Ops Pack (Inventory + Exceptions + Evidence)**
+  - Inventory snapshot generation:
+    - `data/simulated/inventory_snapshot.csv`
+  - Cycle count plan + results:
+    - `data/simulated/cycle_counts.csv`
+    - `output/reports/cycle_count_results.csv`
+  - Inventory accuracy summary:
+    - `output/reports/inventory_accuracy.csv`
+  - Operational exception logging + SLA rollup:
+    - `output/reports/exceptions.csv`
+    - `output/reports/exception_resolution_sla.csv`
+  - Evidence pack for traceability and reproducibility:
+    - `output/audit/run_manifest.json`
+    - `output/audit/evidence_index.md`
+  - One-command entrypoint for Week 5 evidence generation:
+    - `python src/audit_ready/run_audit_pack.py`
+
+### Notes
+
+- Evidence pack is intended to demonstrate traceability (inputs → outputs) and reproducible runs for portfolio purposes.
+
+---
+
 ## [v1.3.1] - 2026-02-18
 
 ### Fixed
