@@ -1,0 +1,2 @@
+exception_id,order_id,sku,location_id,exception_type,severity,created_time_min,resolved_time_min,sla_target_min,status,owner_role,notes,resolution_time_min,within_sla
+EXC00001,ORD0003,SKU0003,A04-02,DAMAGED,WARN,50,100,90,CLOSED,qa,Unit damaged; re-pick or replace required.,50,True
