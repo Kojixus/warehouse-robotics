@@ -2,11 +2,83 @@
 
 All notable changes to this project will be documented in this file.
 
-This project follows a simple semantic versioning approach:
+This project uses a practical semantic versioning approach:
 
-- **MAJOR**: big scope expansion or breaking changes
-- **MINOR**: new features/deliverables
-- **PATCH**: fixes that don’t change core logic/results
+- **MAJOR**: scope expansion or breaking changes
+- **MINOR**: new week deliverable(s)
+- **PATCH**: fixes, hardening, and validation that do not change intended functionality
+
+---
+
+## [v1.3.1] - 2026-02-18
+
+### Fixed
+
+- **Control Tower reliability hardening**
+  - Corrected runtime issues and path mismatches across `src/control_tower/*`
+  - Improved simulator and pipeline entrypoint correctness and determinism
+  - Hardened KPI/alerts/ops brief/plot modules for robustness and performance
+
+### Validation
+
+- Completed verification workflow:
+  - Import/compile checks for Control Tower modules
+  - End-to-end pipeline execution (log generation → KPIs → alerts → ops brief → charts)
+  - Outputs reviewed for completeness and consistency
+
+### Engineering Notes
+
+- Maintenance summary (as recorded): **1 file changed** (**+200 / -160**)
+
+---
+
+## [v1.3] - 2026-02-18
+
+### Added
+
+- **Week 4: Robotics Control Tower (AMR Fleet Ops)**
+  - Simulation log output: `data/simulated/robot_logs.csv`
+  - Fleet KPI outputs:
+    - `output/reports/fleet_kpis_daily.csv`
+    - `output/reports/fleet_kpis_by_robot.csv`
+  - Alerting output: `output/reports/alerts.csv`
+  - Ops briefing output: `output/reports/ops_brief.md`
+  - Operational charts:
+    - `output/charts/utilization_over_time.png`
+    - `output/charts/faults_over_time.png`
+  - One-command entrypoint: `python src/control_tower/run_control_tower.py`
+
+### Notes
+
+- Control Tower simulation is seeded for repeatability and designed as a portfolio-grade operational model (not a production WMS integration).
+
+---
+
+## [v1.2] - 2026-02-18
+
+### Added
+
+- **Week 3: Slotting Optimization (ABC + Move List + Single Impact Heatmap)**
+  - ABC classification: `output/reports/abc_summary.csv`
+  - Slotting move list: `output/reports/move_list_top50.csv`
+  - Slotting KPI summary: `output/reports/slotting_kpis.csv`
+  - Single slotting impact visualization:
+    - `output/charts/heatmap_slotting_impact.png`
+    - Represents **Δ Picks (After − Before)** with **Top 30 absolute changes annotated**
+
+### Changed
+
+- Heatmap axes labeling standardized for warehouse interpretation:
+  - X-axis: **Aisle (X)**
+  - Y-axis: **Bay (Y)**
+
+### Removed
+
+- Consolidated prior multi-heatmap outputs (Before/After/Delta) into one operational impact view to reduce noise and improve readability on larger grids.
+
+### Notes
+
+- “Current SKU location” baseline is inferred from order history (most frequent pick location per SKU) and documented as a simulation assumption.
 
 ---
 
@@ -14,26 +86,26 @@ This project follows a simple semantic versioning approach:
 
 ### Added
 
-- Week 2 deliverables for **Pick Path Optimization MVP**:
-  - KPI comparison report output (`output/reports/kpi_comparison.csv`)
-  - HTML summary report (`output/reports/pick_path_report.html`)
-  - Route images for baseline vs heuristics (`output/charts/*.png`)
+- **Week 2: Pick Path Optimization MVP**
+  - KPI comparison output: `output/reports/kpi_comparison.csv`
+  - Report output: `output/reports/pick_path_report.html`
+  - Route charts:
+    - `output/charts/route_baseline.png`
+    - `output/charts/route_nearest_neighbor.png`
+    - `output/charts/route_zone_batch.png`
+  - Enhanced route visualization option: numbered pick sequence overlay (for demo clarity)
 
-### Changed
+### Fixed
 
-- Updated plotting setup to ensure charts/images generate reliably across environments by setting a writable Matplotlib config directory _before_ importing `matplotlib.pyplot`:
+- Plot/image generation reliability in restricted/non-writable environments by setting a writable Matplotlib config directory **before** importing pyplot:
   - `MPL_CONFIG_DIR = os.path.join("output", ".matplotlib")`
   - `os.makedirs(MPL_CONFIG_DIR, exist_ok=True)`
   - `os.environ.setdefault("MPLCONFIGDIR", MPL_CONFIG_DIR)`
   - `import matplotlib.pyplot as plt`
 
-### Fixed
-
-- Prevented runtime issues where Matplotlib fails to write cache/config files in restricted or non-writable environments (e.g., sandbox/CI/locked-down systems), which could block generation of Week 2 route images and reports.
-
 ### Notes
 
-- No changes were made to input data schemas (`locations.csv`, `skus.csv`, `orders.csv`) or to KPI definitions/route heuristics as part of this fix; it only improves plotting reliability.
+- No changes to routing heuristics or KPI definitions were introduced by the plotting fix.
 
 ---
 
@@ -41,17 +113,18 @@ This project follows a simple semantic versioning approach:
 
 ### Added
 
-- Week 1 deliverables for **Setup + Baseline Simulation + Program Artifacts**:
-  - Repository structure and initial documentation (`README.md`)
+- **Week 1: Setup + Baseline Simulation + Program Artifacts**
+  - Repository structure and documentation baseline (`README.md`)
   - Synthetic datasets:
     - `data/simulated/locations.csv`
     - `data/simulated/skus.csv`
     - `data/simulated/orders.csv`
   - Program artifacts:
     - `artifacts/program/charter.md`
-    - `artifacts/program/changelog.md` (initial)
-  - Baseline KPI groundwork (distance proxy approach and definitions)
+    - `artifacts/program/wbs.csv`
+    - `artifacts/program/risk_register.csv`
+    - `CHANGELOG.md`
 
 ### Notes
 
-- Baseline analysis uses simplified assumptions (2D grid + Manhattan distance) intended for relative comparisons and demo purposes.
+- Baseline travel model uses a simplified 2D layout with Manhattan distance to support relative comparisons and portfolio demonstration.
