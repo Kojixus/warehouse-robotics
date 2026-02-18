@@ -20,6 +20,9 @@ REQUIRED_GLOBAL_KEYS = {
     "base_fault_prob_per_order",
     "fault_delay_min_min",
     "fault_delay_max_min",
+    "capacity_penalty_scale_min",
+    "congestion_gain",
+    "fault_prob_gain",
     "sla_breach_threshold_pct",
     "monte_carlo_runs",
     "base_seed",
@@ -99,6 +102,12 @@ def _validate_config(config: Dict[str, Any]) -> None:
         raise ValueError("Fault delay bounds must be >= 0")
     if float(global_cfg["fault_delay_min_min"]) > float(global_cfg["fault_delay_max_min"]):
         raise ValueError("'fault_delay_min_min' cannot be greater than 'fault_delay_max_min'")
+    if float(global_cfg["capacity_penalty_scale_min"]) < 0.0:
+        raise ValueError("'capacity_penalty_scale_min' must be >= 0")
+    if float(global_cfg["congestion_gain"]) < 0.0:
+        raise ValueError("'congestion_gain' must be >= 0")
+    if float(global_cfg["fault_prob_gain"]) < 0.0:
+        raise ValueError("'fault_prob_gain' must be >= 0")
 
 
 def load_config(path: str | Path = DEFAULT_CONFIG_PATH) -> Dict[str, Any]:

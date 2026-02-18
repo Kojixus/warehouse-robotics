@@ -25,6 +25,9 @@ class GlobalParams:
     base_fault_prob_per_order: float
     fault_delay_min_min: float
     fault_delay_max_min: float
+    capacity_penalty_scale_min: float
+    congestion_gain: float
+    fault_prob_gain: float
 
 
 @dataclass
@@ -34,6 +37,13 @@ class ScenarioParams:
     robots_available_pct: float
     fault_multiplier: float
     queue_delay_multiplier: float
+
+
+@dataclass
+class RobotMinuteSignals:
+    downtime_pct: np.ndarray
+    congestion_pct: np.ndarray
+    fault_pct: np.ndarray
 
 
 def _manhattan(a: Tuple[int, int], b: Tuple[int, int]) -> int:
@@ -145,6 +155,60 @@ def apply_demand_multiplier(order_table: pd.DataFrame, shift_minutes: int, deman
     return out
 
 
+def build_robot_minute_signals(
+    robot_logs: pd.DataFrame | None,
+    shift_minutes: int,
+    fallback_fleet_size: int,
+) -> RobotMinuteSignals | None:
+    if robot_logs is None or robot_logs.empty or shift_minutes <= 0:
+        return None
+
+    required = {"robot_id", "timestamp_min", "duration_min", "state"}
+    missing = required - set(robot_logs.columns)
+    if missing:
+        raise ValueError(f"Robot logs missing columns: {sorted(missing)}")
+
+    df = robot_logs.copy()
+    df["robot_id"] = df["robot_id"].astype(str).str.strip()
+    df["state"] = df["state"].astype(str).str.upper().replace({"CHARGING": "CHARGE"})
+    df["timestamp_min"] = pd.to_numeric(df["timestamp_min"], errors="coerce").fillna(0).astype(int)
+    df["duration_min"] = pd.to_numeric(df["duration_min"], errors="coerce").fillna(0).clip(lower=0).astype(int)
+
+    diff_charge = np.zeros(shift_minutes + 1, dtype=int)
+    diff_fault = np.zeros(shift_minutes + 1, dtype=int)
+
+    for row in df.itertuples(index=False):
+        start = max(0, int(getattr(row, "timestamp_min")))
+        dur = int(getattr(row, "duration_min"))
+        if dur <= 0:
+            continue
+        end = min(shift_minutes, start + dur)
+        if start >= shift_minutes or end <= start:
+            continue
+
+        state = str(getattr(row, "state"))
+        if state == "CHARGE":
+            diff_charge[start] += 1
+            diff_charge[end] -= 1
+        elif state == "FAULT":
+            diff_fault[start] += 1
+            diff_fault[end] -= 1
+
+    charge_active = np.cumsum(diff_charge[:-1]).astype(float)
+    fault_active = np.cumsum(diff_fault[:-1]).astype(float)
+
+    fleet_size = max(int(fallback_fleet_size), int(df["robot_id"].nunique()), 1)
+    congestion_pct = np.clip((charge_active + fault_active) / float(fleet_size), 0.0, 1.0)
+    fault_pct = np.clip(fault_active / float(fleet_size), 0.0, 1.0)
+    downtime_pct = np.clip(congestion_pct, 0.0, 1.0)
+
+    return RobotMinuteSignals(
+        downtime_pct=downtime_pct,
+        congestion_pct=congestion_pct,
+        fault_pct=fault_pct,
+    )
+
+
 def _add_base_service_time(order_table: pd.DataFrame, g: GlobalParams, start: Tuple[int, int]) -> pd.DataFrame:
     out = order_table.copy()
     route_cache: Dict[Tuple[Tuple[int, int], ...], int] = {}
@@ -176,6 +240,7 @@ def simulate_one_run(
     g: GlobalParams,
     s: ScenarioParams,
     seed: int,
+    robot_signals: RobotMinuteSignals | None = None,
 ) -> pd.DataFrame:
     n_orders = int(order_table.shape[0])
     if n_orders == 0:
@@ -191,6 +256,16 @@ def simulate_one_run(
     dues = order_table["due_time"].to_numpy(dtype=float, copy=False)
     base_service = order_table["base_service_min"].to_numpy(dtype=float, copy=False)
     order_ids = order_table["order_id"].astype(str).to_numpy()
+    arrival_idx = arrivals.astype(int).clip(0, max(0, int(g.shift_minutes) - 1))
+
+    if robot_signals is None:
+        downtime_pct = np.zeros(n_orders, dtype=float)
+        congestion_pressure = np.zeros(n_orders, dtype=float)
+        fault_pressure = np.zeros(n_orders, dtype=float)
+    else:
+        downtime_pct = robot_signals.downtime_pct[arrival_idx]
+        congestion_pressure = robot_signals.congestion_pct[arrival_idx]
+        fault_pressure = robot_signals.fault_pct[arrival_idx]
 
     congestion = rng.normal(
         loc=float(g.base_congestion_mean_min),
@@ -199,10 +274,16 @@ def simulate_one_run(
     )
     np.maximum(congestion, 0.0, out=congestion)
     congestion *= float(s.queue_delay_multiplier)
+    congestion *= 1.0 + float(g.congestion_gain) * congestion_pressure
+
+    capacity_penalty = float(g.capacity_penalty_scale_min) * downtime_pct
+
+    fault_prob = p_fault + float(g.fault_prob_gain) * fault_pressure
+    np.clip(fault_prob, 0.0, 0.95, out=fault_prob)
 
     fault_delay = np.zeros(n_orders, dtype=float)
-    if p_fault > 0.0:
-        fault_flags = rng.random(n_orders) < p_fault
+    if fault_prob.size > 0 and float(fault_prob.max()) > 0.0:
+        fault_flags = rng.random(n_orders) < fault_prob
         n_faults = int(fault_flags.sum())
         if n_faults > 0:
             fault_delay[fault_flags] = rng.uniform(
@@ -223,7 +304,7 @@ def simulate_one_run(
 
         free_time, server_id = heapq.heappop(server_heap)
         ss = arrival if arrival > free_time else free_time
-        comp = ss + base_service[i] + congestion[i] + fault_delay[i]
+        comp = ss + base_service[i] + congestion[i] + capacity_penalty[i] + fault_delay[i]
 
         heapq.heappush(server_heap, (comp, server_id))
 
@@ -245,6 +326,7 @@ def simulate_one_run(
             "on_time": on_time,
             "service_min_base": base_service,
             "congestion_min": congestion,
+            "capacity_penalty_min": capacity_penalty,
             "fault_delay_min": fault_delay,
         }
     )
@@ -257,11 +339,17 @@ def run_scenario_monte_carlo(
     s: ScenarioParams,
     runs: int,
     base_seed: int,
+    robot_logs: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     loc_map = build_location_map(locations)
     order_table = aggregate_orders(orders, loc_map)
     start = (int(g.start_x), int(g.start_y))
     order_table = _add_base_service_time(order_table, g, start=start)
+    robot_signals = build_robot_minute_signals(
+        robot_logs=robot_logs,
+        shift_minutes=int(g.shift_minutes),
+        fallback_fleet_size=int(g.base_servers),
+    )
 
     rng = random.Random(base_seed + 1337)
     order_table = apply_demand_multiplier(order_table, g.shift_minutes, float(s.demand_multiplier), rng)
@@ -272,7 +360,7 @@ def run_scenario_monte_carlo(
     all_runs = []
     for r in range(int(runs)):
         seed = base_seed + r
-        per_order = simulate_one_run(order_table, g, s, seed=seed)
+        per_order = simulate_one_run(order_table, g, s, seed=seed, robot_signals=robot_signals)
         per_order["scenario"] = s.name
         per_order["run_index"] = r
         per_order["seed"] = seed

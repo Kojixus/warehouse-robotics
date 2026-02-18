@@ -38,6 +38,7 @@ ORDERS_COLUMNS = [
 ]
 
 LOCATIONS_COLUMNS = ["location_id", "x", "y", "zone", "is_prime"]
+ROBOT_LOG_COLUMNS = ["robot_id", "timestamp_min", "state", "duration_min"]
 
 
 def ensure_dirs() -> None:
@@ -78,6 +79,18 @@ def read_simulation_csv(path: str, expected_cols: Iterable[str]) -> pd.DataFrame
         raise ValueError(f"{file_path} missing required columns: {sorted(missing)}")
 
     return df
+
+
+def resolve_robot_logs_path() -> Path | None:
+    candidates = [
+        Path("data/simulated/robot_logs.csv"),
+        Path("output/control_tower_data/simulated/robot_logs.csv"),
+        Path("output/simulated/robot_logs.csv"),
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
 
 
 def write_risk_report(out_path: str, summary: pd.DataFrame, breach_threshold: float) -> None:
@@ -139,6 +152,9 @@ def main() -> None:
         base_fault_prob_per_order=float(g0["base_fault_prob_per_order"]),
         fault_delay_min_min=float(g0["fault_delay_min_min"]),
         fault_delay_max_min=float(g0["fault_delay_max_min"]),
+        capacity_penalty_scale_min=float(g0["capacity_penalty_scale_min"]),
+        congestion_gain=float(g0["congestion_gain"]),
+        fault_prob_gain=float(g0["fault_prob_gain"]),
     )
 
     breach_threshold = float(g0["sla_breach_threshold_pct"])
@@ -147,6 +163,16 @@ def main() -> None:
 
     orders = read_simulation_csv("data/simulated/orders.csv", ORDERS_COLUMNS)
     locations = read_simulation_csv("data/simulated/locations.csv", LOCATIONS_COLUMNS)
+    robot_logs_path = resolve_robot_logs_path()
+    robot_logs = (
+        read_simulation_csv(str(robot_logs_path), ROBOT_LOG_COLUMNS)
+        if robot_logs_path is not None
+        else None
+    )
+    if robot_logs_path is not None:
+        print(f"Using robot logs: {robot_logs_path.as_posix()}")
+    else:
+        print("Using robot logs: none found (dynamic downtime/congestion/fault pressure disabled)")
 
     scenario_def = pd.DataFrame(cfg["scenarios"]).loc[:, SCENARIO_COLUMNS]
     scenario_def.to_csv("output/reports/scenario_definitions.csv", index=False)
@@ -168,6 +194,7 @@ def main() -> None:
             s=sp,
             runs=runs,
             base_seed=_stable_scenario_seed(base_seed, sp.name),
+            robot_logs=robot_logs,
         )
         per_order_all.append(per_order)
 

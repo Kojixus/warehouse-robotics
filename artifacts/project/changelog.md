@@ -10,6 +10,24 @@ This project uses a practical semantic versioning approach:
 
 ---
 
+## [v1.4.2] - 2026-02-18
+
+### Changed
+
+- **Scenario stress sensitivity tuning with robot-log coupling**
+  - Added new global knobs in `config/scenarios.json`:
+    - `capacity_penalty_scale_min`: increased to `12`
+    - `congestion_gain`: increased to `1.1`
+    - `fault_prob_gain`: increased to `0.35`
+  - `src/scenarios/simulation_model.py` now applies minute-level robot log pressure to:
+    - capacity penalty (downtime impact on cycle time),
+    - congestion amplification (CHARGE/FAULT pressure),
+    - dynamic fault probability uplift.
+  - `src/scenarios/run_scenarios.py` now auto-loads robot logs from standard/legacy paths and reports which source is used.
+  - `src/scenarios/scenario_config.py` now validates the new scenario-global knobs.
+
+---
+
 ## [v1.4.1] - 2026-02-18
 
 ### Fixed
