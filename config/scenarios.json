@@ -14,7 +14,11 @@
       "base_fault_prob_per_order": 0.03,
       "fault_delay_min_min": 2,
       "fault_delay_max_min": 12,
-  
+
+      "capacity_penalty_scale_min": 12,
+      "congestion_gain": 1.1,
+      "fault_prob_gain": 0.35,
+
       "sla_breach_threshold_pct": 5.0,
       "monte_carlo_runs": 100,
       "base_seed": 42
