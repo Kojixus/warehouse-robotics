@@ -1,0 +1,59 @@
+timestamp_min,severity,alert_type,robot_id,metric,value,threshold,message
+29,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,50.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+59,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,35.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+89,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,38.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+119,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,43.0,55.0,Fleet utilization below threshold for a 30-minute window.
+149,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,20.666666666666668,55.0,Fleet utilization below threshold for a 30-minute window.
+179,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,27.0,55.0,Fleet utilization below threshold for a 30-minute window.
+209,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,44.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+239,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,5.666666666666667,55.0,Fleet utilization below threshold for a 30-minute window.
+269,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,9.333333333333334,55.0,Fleet utilization below threshold for a 30-minute window.
+299,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,12.333333333333334,55.0,Fleet utilization below threshold for a 30-minute window.
+329,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,5.666666666666667,55.0,Fleet utilization below threshold for a 30-minute window.
+359,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,5.0,55.0,Fleet utilization below threshold for a 30-minute window.
+389,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,0.0,55.0,Fleet utilization below threshold for a 30-minute window.
+419,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,4.666666666666667,55.0,Fleet utilization below threshold for a 30-minute window.
+449,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,6.333333333333333,55.0,Fleet utilization below threshold for a 30-minute window.
+479,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,5.0,55.0,Fleet utilization below threshold for a 30-minute window.
+19,WARN,ROBOT_LOW_BATTERY,R07,battery_pct_end,8.0,15.0,Robot ended WORK block below battery threshold.
+33,WARN,ROBOT_LOW_BATTERY,R08,battery_pct_end,8.0,15.0,Robot ended WORK block below battery threshold.
+39,WARN,ROBOT_LOW_BATTERY,R02,battery_pct_end,3.0,15.0,Robot ended WORK block below battery threshold.
+48,WARN,ROBOT_LOW_BATTERY,R01,battery_pct_end,13.0,15.0,Robot ended WORK block below battery threshold.
+56,WARN,FLEET_CHARGING_CONGESTION,,robots_charging_pct,40.0,30.0,More than 30% of fleet charging simultaneously.
+59,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,4.0,2.0,High fleet fault rate in the last 60 minutes.
+66,WARN,ROBOT_LOW_BATTERY,R09,battery_pct_end,8.0,15.0,Robot ended WORK block below battery threshold.
+71,WARN,ROBOT_LOW_BATTERY,R05,battery_pct_end,9.0,15.0,Robot ended WORK block below battery threshold.
+71,WARN,ROBOT_LOW_BATTERY,R06,battery_pct_end,11.0,15.0,Robot ended WORK block below battery threshold.
+72,WARN,ROBOT_LOW_BATTERY,R10,battery_pct_end,11.0,15.0,Robot ended WORK block below battery threshold.
+89,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,5.0,2.0,High fleet fault rate in the last 60 minutes.
+109,WARN,ROBOT_LOW_BATTERY,R07,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+130,WARN,ROBOT_LONG_IDLE,R09,idle_streak_min,46.0,45.0,Robot idle streak exceeded threshold.
+151,WARN,ROBOT_LOW_BATTERY,R01,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+164,WARN,ROBOT_LOW_BATTERY,R03,battery_pct_end,12.0,15.0,Robot ended WORK block below battery threshold.
+176,WARN,ROBOT_LOW_BATTERY,R09,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+183,WARN,ROBOT_LOW_BATTERY,R05,battery_pct_end,13.0,15.0,Robot ended WORK block below battery threshold.
+190,WARN,ROBOT_LONG_IDLE,R03,idle_streak_min,49.0,45.0,Robot idle streak exceeded threshold.
+196,WARN,ROBOT_LONG_IDLE,R09,idle_streak_min,47.0,45.0,Robot idle streak exceeded threshold.
+198,WARN,ROBOT_LOW_BATTERY,R06,battery_pct_end,8.0,15.0,Robot ended WORK block below battery threshold.
+201,WARN,ROBOT_LONG_IDLE,R07,idle_streak_min,50.0,45.0,Robot idle streak exceeded threshold.
+206,WARN,ROBOT_LONG_IDLE,R02,idle_streak_min,59.0,45.0,Robot idle streak exceeded threshold.
+211,WARN,ROBOT_LONG_IDLE,R06,idle_streak_min,54.0,45.0,Robot idle streak exceeded threshold.
+219,WARN,ROBOT_LONG_IDLE,R10,idle_streak_min,45.0,45.0,Robot idle streak exceeded threshold.
+246,WARN,ROBOT_LONG_IDLE,R01,idle_streak_min,45.0,45.0,Robot idle streak exceeded threshold.
+257,WARN,ROBOT_LONG_IDLE,R08,idle_streak_min,55.0,45.0,Robot idle streak exceeded threshold.
+265,WARN,ROBOT_LONG_IDLE,R03,idle_streak_min,55.0,45.0,Robot idle streak exceeded threshold.
+267,WARN,ROBOT_LOW_BATTERY,R09,battery_pct_end,13.0,15.0,Robot ended WORK block below battery threshold.
+274,WARN,ROBOT_LONG_IDLE,R06,idle_streak_min,47.0,45.0,Robot idle streak exceeded threshold.
+275,WARN,ROBOT_LONG_IDLE,R04,idle_streak_min,58.0,45.0,Robot idle streak exceeded threshold.
+280,WARN,ROBOT_LONG_IDLE,R02,idle_streak_min,52.0,45.0,Robot idle streak exceeded threshold.
+290,WARN,ROBOT_LONG_IDLE,R07,idle_streak_min,49.0,45.0,Robot idle streak exceeded threshold.
+324,WARN,ROBOT_LONG_IDLE,R09,idle_streak_min,47.0,45.0,Robot idle streak exceeded threshold.
+339,WARN,ROBOT_LONG_IDLE,R01,idle_streak_min,48.0,45.0,Robot idle streak exceeded threshold.
+344,WARN,ROBOT_LONG_IDLE,R10,idle_streak_min,55.0,45.0,Robot idle streak exceeded threshold.
+357,WARN,ROBOT_LONG_IDLE,R02,idle_streak_min,47.0,45.0,Robot idle streak exceeded threshold.
+360,WARN,ROBOT_LONG_IDLE,R05,idle_streak_min,48.0,45.0,Robot idle streak exceeded threshold.
+365,WARN,ROBOT_LONG_IDLE,R08,idle_streak_min,46.0,45.0,Robot idle streak exceeded threshold.
+366,WARN,ROBOT_LONG_IDLE,R03,idle_streak_min,50.0,45.0,Robot idle streak exceeded threshold.
+382,WARN,ROBOT_LONG_IDLE,R06,idle_streak_min,46.0,45.0,Robot idle streak exceeded threshold.
+396,WARN,ROBOT_LONG_IDLE,R07,idle_streak_min,48.0,45.0,Robot idle streak exceeded threshold.
+411,WARN,ROBOT_LONG_IDLE,R04,idle_streak_min,51.0,45.0,Robot idle streak exceeded threshold.

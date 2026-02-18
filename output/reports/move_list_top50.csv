@@ -1,0 +1,4 @@
+sku,abc_class,velocity_per_day,from_location_id,to_location_id
+SKU0003,A,80.0,A04-02,A01-02
+SKU0005,A,60.0,B12-06,A01-03
+SKU0006,A,52.0,B10-06,A02-03

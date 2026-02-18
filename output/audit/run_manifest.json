@@ -1,0 +1,73 @@
+{
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_version": "3.14.0"
+  },
+  "inputs": [
+    {
+      "exists": true,
+      "path": "data/simulated/locations.csv",
+      "sha256": "22604b3b5189a4faac6fd96fb9d165fc751de836a588b972053c53952480b444",
+      "size_bytes": 600
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/skus.csv",
+      "sha256": "9ff44534fe0fee521d6c1b0878d13e9e5456040fd3e6ec997678f90d396dfa66",
+      "size_bytes": 606
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/orders.csv",
+      "sha256": "122552f40bea245e19add0df6e357262eaff93ac5ef4718c7d5234f140285ec0",
+      "size_bytes": 1747
+    },
+    {
+      "exists": true,
+      "path": "output/reports/move_list_top50.csv",
+      "sha256": "6cdb2efde6c9f83428f4aa7d624fb12f1f5aa8f9d89f231fd6ccf073018b23ec",
+      "size_bytes": 154
+    }
+  ],
+  "outputs": [
+    {
+      "exists": true,
+      "path": "data/simulated/inventory_snapshot.csv",
+      "sha256": "853aed548c06592932ea59c6de6242cf63bc6ba33ebe0eae8809b08f9aabaae8",
+      "size_bytes": 1757
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/cycle_counts.csv",
+      "sha256": "759c23b69602d62f15b4ca7de57a11be42a6ef182defcec6215e4ca72a3bbd8a",
+      "size_bytes": 1668
+    },
+    {
+      "exists": true,
+      "path": "output/reports/inventory_accuracy.csv",
+      "sha256": "fc27346c46988643a97d67ae3bb45c8e52c2329e62440499e3c0fdf56c4a2690",
+      "size_bytes": 169
+    },
+    {
+      "exists": true,
+      "path": "output/reports/cycle_count_results.csv",
+      "sha256": "efa577bbf36605e5b7780a963439433aad98fe37cb049295c2caab7233c3b796",
+      "size_bytes": 125
+    },
+    {
+      "exists": true,
+      "path": "output/reports/exceptions.csv",
+      "sha256": "0c9189f408438de46fa1c78f471d44560a55b252cf6f250886488c1fef26c214",
+      "size_bytes": 285
+    },
+    {
+      "exists": true,
+      "path": "output/reports/exception_resolution_sla.csv",
+      "sha256": "175eb2cfb338ca38e17a1409ae7b3368349f66e2ba740bef27286e1d1f232a63",
+      "size_bytes": 93
+    }
+  ],
+  "run_id": "run_20260218T204204Z_edb7e27d",
+  "seed": 42,
+  "timestamp_utc": "2026-02-18T20:42:05Z"
+}

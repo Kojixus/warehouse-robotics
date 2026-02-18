@@ -1,0 +1,2 @@
+exception_type,count,pct_within_sla,avg_resolution_min,sla_breaches
+DAMAGED,1,100.0,50.0,0

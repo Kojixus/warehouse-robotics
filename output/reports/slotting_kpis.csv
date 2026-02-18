@@ -1,0 +1,2 @@
+avg_distance_before,avg_distance_after,pct_improvement,orders_analyzed,method
+42.0,39.86666666666667,5.08,15,nearest_neighbor

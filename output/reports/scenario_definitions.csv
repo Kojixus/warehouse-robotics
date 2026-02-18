@@ -1,0 +1,7 @@
+name,demand_multiplier,robots_available_pct,fault_multiplier,queue_delay_multiplier
+BASELINE,1.0,1.0,1.0,1.0
+DEMAND_SPIKE_2X,2.0,1.0,1.0,1.2
+ROBOTS_DOWN_30PCT,1.0,0.7,1.0,1.1
+HIGH_FAULT_RATE_2X,1.0,1.0,2.0,1.2
+CONGESTION_PEAK,1.5,1.0,1.2,1.5
+PERFECT_STORM,2.0,0.7,2.0,1.6
