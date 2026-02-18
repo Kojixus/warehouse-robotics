@@ -58,19 +58,27 @@ def ensure_dirs() -> None:
     os.makedirs("output/audit", exist_ok=True)
 
 
-def load_inputs() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame | None]:
+def resolve_robot_logs_path() -> str | None:
+    candidates = [
+        "data/simulated/robot_logs.csv",
+        "output/control_tower_data/simulated/robot_logs.csv",
+        "output/simulated/robot_logs.csv",
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    return None
+
+
+def load_inputs() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame | None, str | None]:
     skus = _load_csv_resilient("data/simulated/skus.csv", ["sku", "velocity_per_day"])
     locations = _load_csv_resilient("data/simulated/locations.csv", ["location_id"])
     orders = _load_csv_resilient("data/simulated/orders.csv", ["order_id", "sku", "pick_location_id"])
 
-    robot_logs_path = "data/simulated/robot_logs.csv"
-    robot_logs = (
-        _load_csv_resilient(robot_logs_path, ["state", "timestamp_min", "duration_min"])
-        if os.path.exists(robot_logs_path)
-        else None
-    )
+    robot_logs_path = resolve_robot_logs_path()
+    robot_logs = _load_csv_resilient(robot_logs_path, ["state", "timestamp_min", "duration_min"]) if robot_logs_path else None
 
-    return skus, locations, orders, robot_logs
+    return skus, locations, orders, robot_logs, robot_logs_path
 
 
 def main() -> None:
@@ -81,7 +89,11 @@ def main() -> None:
     run_id = f"run_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}_{uuid.uuid4().hex[:8]}"
 
     # ---- Load inputs ----
-    skus, locations, orders, robot_logs = load_inputs()
+    skus, locations, orders, robot_logs, robot_logs_path = load_inputs()
+    if robot_logs_path:
+        print(f"Using robot logs: {robot_logs_path}")
+    else:
+        print("Using robot logs: none found (ROBOT_DELAY signal disabled)")
 
     # ---- Build ABC + home locations ----
     sku_abc = build_abc_classes(skus)
@@ -151,8 +163,8 @@ def main() -> None:
         "data/simulated/skus.csv",
         "data/simulated/orders.csv",
     ]
-    if robot_logs is not None:
-        inputs.append("data/simulated/robot_logs.csv")
+    if robot_logs is not None and robot_logs_path:
+        inputs.append(robot_logs_path)
     # Week 3 optional
     if os.path.exists("output/reports/move_list_top50.csv"):
         inputs.append("output/reports/move_list_top50.csv")

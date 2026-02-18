@@ -1,7 +1,7 @@
 # Audit Evidence Index
 
-- Run ID: **run_20260218T204204Z_edb7e27d**
-- Timestamp (UTC): **2026-02-18T20:42:05Z**
+- Run ID: **run_20260218T205544Z_a8e2345b**
+- Timestamp (UTC): **2026-02-18T20:55:44Z**
 - Seed: **42**
 
 ## Inputs
@@ -9,6 +9,7 @@
 - `data/simulated/locations.csv`
 - `data/simulated/skus.csv`
 - `data/simulated/orders.csv`
+- `data/simulated/robot_logs.csv`
 - `output/reports/move_list_top50.csv`
 
 ## Outputs (Evidence Artifacts)
