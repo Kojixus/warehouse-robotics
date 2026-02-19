@@ -20,7 +20,7 @@ Create a demo-ready “Warehouse Robotics Efficiency Program” consisting of th
 - Sample SKUs with velocity distribution (fast movers drive demand)
 - Sample orders for a simulated operating day
 - Baseline KPI computation + “before/after” comparisons
-- Clear artifacts: WBS, schedule outline, risk register, change log
+- Clear Data: WBS, schedule outline, risk register, change log
 - Demo outputs: CSVs, charts, short reports (HTML/PDF)
 - Provide a heatmap of routes
 
@@ -58,14 +58,14 @@ Later (Weeks 2–4):
 
 ## Deliverables
 
-- Program artifacts: charter, WBS, schedule outline, risk register, change log
+- Program Data: charter, WBS, schedule outline, risk register, change log
 - Data artifacts: locations.csv, skus.csv, orders.csv, robot_logs.csv (later)
 - Reports: baseline KPIs + route comparison + slotting move list + control tower brief (later)
 - Screenshots/visuals for LinkedIn demo (routes, heatmaps, dashboards)
 
 ## Timeline (High-Level)
 
-- Week 1: Setup + baseline simulation + program artifacts
+- Week 1: Setup + baseline simulation + program Data
 - Week 2: Pick path heuristics + route visualization
 - Week 3: Slotting optimization + move list + heatmaps
 - Week 4: Fleet control tower KPIs + alerts + ops brief
