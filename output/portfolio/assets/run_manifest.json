@@ -1,0 +1,79 @@
+{
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_version": "3.14.0"
+  },
+  "inputs": [
+    {
+      "exists": true,
+      "path": "data/simulated/locations.csv",
+      "sha256": "5ccfe888e5235e0728b9fcb2b1e6adc425db5121d67a4016a82d2bb3d273d0e5",
+      "size_bytes": 12550
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/skus.csv",
+      "sha256": "90cffbb09070b6a09af7ef83b6507db49f61934b0727ab49ba05250739a8b8c6",
+      "size_bytes": 13064
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/orders.csv",
+      "sha256": "f20b8e90f672b6d2737d04d2f26269085e89c28ac325d34edd00369ae3538e39",
+      "size_bytes": 83780
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/robot_logs.csv",
+      "sha256": "484a2ecc4ca4d14f3f20cc3009ed09595daaeeb4a2070117498b331186dc2b31",
+      "size_bytes": 22093
+    },
+    {
+      "exists": true,
+      "path": "output/reports/move_list_top50.csv",
+      "sha256": "2d81fb9b6571199f026bc7518b04d1f744097a0009f7623cba7c85aee1eca77d",
+      "size_bytes": 943
+    }
+  ],
+  "outputs": [
+    {
+      "exists": true,
+      "path": "data/simulated/inventory_snapshot.csv",
+      "sha256": "6f38f1a953ce863b509958b9b445c2961238f99e8b3af0e2f373641138daa8a6",
+      "size_bytes": 39780
+    },
+    {
+      "exists": true,
+      "path": "data/simulated/cycle_counts.csv",
+      "sha256": "7a867d906c245e61650dc6fbc2616e71edfe45fbcbb99e09c57c790e690ac6c4",
+      "size_bytes": 3243
+    },
+    {
+      "exists": true,
+      "path": "output/reports/inventory_accuracy.csv",
+      "sha256": "05bb05e8aa391a772ef812ceeb83fd25b4bfd70ff62b5e0e7f82c23128825031",
+      "size_bytes": 170
+    },
+    {
+      "exists": true,
+      "path": "output/reports/cycle_count_results.csv",
+      "sha256": "b33e11cf3c9bc5970dd650460ac0c17a96bf0d814bc438e891ef39fe8d135725",
+      "size_bytes": 125
+    },
+    {
+      "exists": true,
+      "path": "output/reports/exceptions.csv",
+      "sha256": "e90f33c193c7ab078160c1dd570873a5f458ebf209193fc1fe799c08344d358d",
+      "size_bytes": 6646
+    },
+    {
+      "exists": true,
+      "path": "output/reports/exception_resolution_sla.csv",
+      "sha256": "2b150673a75b6a4da757f9e2a0159c0a68866f752e0d7f55170216f16be3bf22",
+      "size_bytes": 160
+    }
+  ],
+  "run_id": "run_20260218T214234Z_65b87b1e",
+  "seed": 42,
+  "timestamp_utc": "2026-02-18T21:42:34Z"
+}

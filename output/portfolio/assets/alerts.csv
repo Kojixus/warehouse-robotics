@@ -1,0 +1,52 @@
+timestamp_min,severity,alert_type,robot_id,metric,value,threshold,message
+37,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,54.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+67,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,40.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+97,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,43.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+127,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,36.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+157,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,38.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+187,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,42.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+217,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,45.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+247,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,48.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+277,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,46.0,55.0,Fleet utilization below threshold for a 30-minute window.
+307,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,28.0,55.0,Fleet utilization below threshold for a 30-minute window.
+337,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,32.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+367,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,31.333333333333332,55.0,Fleet utilization below threshold for a 30-minute window.
+397,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,43.666666666666664,55.0,Fleet utilization below threshold for a 30-minute window.
+427,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,43.333333333333336,55.0,Fleet utilization below threshold for a 30-minute window.
+457,CRIT,FLEET_LOW_UTIL_30M,,utilization_rolling_30m_pct,40.0,55.0,Fleet utilization below threshold for a 30-minute window.
+479,CRIT,ROBOT_REPEAT_FAULTS_SHIFT,R02,fault_events,2.0,2.0,Robot had 2+ fault events this shift.
+479,CRIT,ROBOT_REPEAT_FAULTS_SHIFT,R04,fault_events,3.0,2.0,Robot had 2+ fault events this shift.
+479,CRIT,ROBOT_REPEAT_FAULTS_SHIFT,R06,fault_events,2.0,2.0,Robot had 2+ fault events this shift.
+479,CRIT,ROBOT_REPEAT_FAULTS_SHIFT,R08,fault_events,2.0,2.0,Robot had 2+ fault events this shift.
+479,CRIT,ROBOT_REPEAT_FAULTS_SHIFT,R10,fault_events,4.0,2.0,Robot had 2+ fault events this shift.
+21,WARN,ROBOT_LOW_BATTERY,R03,battery_pct_end,0.0,15.0,Robot ended WORK block below battery threshold.
+23,WARN,ROBOT_LOW_BATTERY,R08,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+42,WARN,FLEET_CHARGING_CONGESTION,,robots_charging_pct,40.0,30.0,More than 30% of fleet charging simultaneously.
+49,WARN,ROBOT_LOW_BATTERY,R02,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+55,WARN,ROBOT_LOW_BATTERY,R01,battery_pct_end,11.0,15.0,Robot ended WORK block below battery threshold.
+59,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,4.0,2.0,High fleet fault rate in the last 60 minutes.
+68,WARN,ROBOT_LOW_BATTERY,R10,battery_pct_end,10.0,15.0,Robot ended WORK block below battery threshold.
+101,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,3.0,2.0,High fleet fault rate in the last 60 minutes.
+131,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,3.0,2.0,High fleet fault rate in the last 60 minutes.
+159,WARN,ROBOT_LOW_BATTERY,R02,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+164,WARN,ROBOT_LOW_BATTERY,R03,battery_pct_end,10.0,15.0,Robot ended WORK block below battery threshold.
+170,WARN,ROBOT_LOW_BATTERY,R09,battery_pct_end,13.0,15.0,Robot ended WORK block below battery threshold.
+171,WARN,FLEET_CHARGING_CONGESTION,,robots_charging_pct,40.0,30.0,More than 30% of fleet charging simultaneously.
+181,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,3.0,2.0,High fleet fault rate in the last 60 minutes.
+215,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,3.0,2.0,High fleet fault rate in the last 60 minutes.
+221,WARN,ROBOT_LOW_BATTERY,R03,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+236,WARN,ROBOT_LOW_BATTERY,R01,battery_pct_end,13.0,15.0,Robot ended WORK block below battery threshold.
+241,WARN,ROBOT_LONG_IDLE,R02,idle_streak_min,56.0,45.0,Robot idle streak exceeded threshold.
+247,WARN,FLEET_CHARGING_CONGESTION,,robots_charging_pct,40.0,30.0,More than 30% of fleet charging simultaneously.
+261,WARN,ROBOT_LOW_BATTERY,R08,battery_pct_end,10.0,15.0,Robot ended WORK block below battery threshold.
+292,WARN,ROBOT_LONG_IDLE,R09,idle_streak_min,49.0,45.0,Robot idle streak exceeded threshold.
+295,WARN,ROBOT_LOW_BATTERY,R06,battery_pct_end,5.0,15.0,Robot ended WORK block below battery threshold.
+324,WARN,ROBOT_LOW_BATTERY,R10,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+340,WARN,ROBOT_LOW_BATTERY,R01,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+343,WARN,ROBOT_LONG_IDLE,R04,idle_streak_min,50.0,45.0,Robot idle streak exceeded threshold.
+350,WARN,FLEET_CHARGING_CONGESTION,,robots_charging_pct,40.0,30.0,More than 30% of fleet charging simultaneously.
+361,WARN,ROBOT_LOW_BATTERY,R05,battery_pct_end,1.0,15.0,Robot ended WORK block below battery threshold.
+366,WARN,ROBOT_LOW_BATTERY,R02,battery_pct_end,0.0,15.0,Robot ended WORK block below battery threshold.
+378,WARN,FLEET_HIGH_FAULT_RATE_60M,,fault_starts_rolling_60m,3.0,2.0,High fleet fault rate in the last 60 minutes.
+415,WARN,ROBOT_LOW_BATTERY,R08,battery_pct_end,14.0,15.0,Robot ended WORK block below battery threshold.
+446,WARN,ROBOT_LOW_BATTERY,R02,battery_pct_end,10.0,15.0,Robot ended WORK block below battery threshold.

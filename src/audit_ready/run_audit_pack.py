@@ -1,7 +1,9 @@
-import os
+from __future__ import annotations
+
 import platform
 import uuid
 from datetime import datetime, timezone
+from pathlib import Path
 
 import pandas as pd
 
@@ -26,8 +28,18 @@ except ImportError:
     from exceptions import generate_exceptions, summarize_exception_sla
     from audit_pack import write_evidence_index, write_run_manifest
 
+DATA_DIR = Path("data/simulated")
+OUTPUT_REPORTS_DIR = Path("output/reports")
+OUTPUT_AUDIT_DIR = Path("output/audit")
+SLOTTING_MOVE_LIST_PATH = OUTPUT_REPORTS_DIR / "move_list_top50.csv"
+ROBOT_LOG_CANDIDATES: tuple[Path, ...] = (
+    DATA_DIR / "robot_logs.csv",
+    Path("output/control_tower_data/simulated/robot_logs.csv"),
+    Path("output/simulated/robot_logs.csv"),
+)
 
-def _load_csv_resilient(path: str, required_columns: list[str]) -> pd.DataFrame:
+
+def _load_csv_resilient(path: Path, required_columns: list[str]) -> pd.DataFrame:
     """
     Read CSV files and repair malformed files where each full row is quoted.
     """
@@ -42,38 +54,32 @@ def _load_csv_resilient(path: str, required_columns: list[str]) -> pd.DataFrame:
             repaired.columns = repaired_columns
             df = repaired
 
-    for c in df.columns:
-        if df[c].dtype == object:
-            df[c] = df[c].astype(str).str.strip().str.strip('"')
+    for column_name in df.columns:
+        if df[column_name].dtype == object:
+            df[column_name] = df[column_name].astype(str).str.strip().str.strip('"')
 
-    missing = [c for c in required_columns if c not in df.columns]
+    missing = [column_name for column_name in required_columns if column_name not in df.columns]
     if missing:
-        raise ValueError(f"{path} missing required columns: {missing}")
+        raise ValueError(f"{path.as_posix()} missing required columns: {missing}")
     return df
 
 
 def ensure_dirs() -> None:
-    os.makedirs("data/simulated", exist_ok=True)
-    os.makedirs("output/reports", exist_ok=True)
-    os.makedirs("output/audit", exist_ok=True)
+    for folder in (DATA_DIR, OUTPUT_REPORTS_DIR, OUTPUT_AUDIT_DIR):
+        folder.mkdir(parents=True, exist_ok=True)
 
 
-def resolve_robot_logs_path() -> str | None:
-    candidates = [
-        "data/simulated/robot_logs.csv",
-        "output/control_tower_data/simulated/robot_logs.csv",
-        "output/simulated/robot_logs.csv",
-    ]
-    for path in candidates:
-        if os.path.exists(path):
+def resolve_robot_logs_path() -> Path | None:
+    for path in ROBOT_LOG_CANDIDATES:
+        if path.exists():
             return path
     return None
 
 
-def load_inputs() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame | None, str | None]:
-    skus = _load_csv_resilient("data/simulated/skus.csv", ["sku", "velocity_per_day"])
-    locations = _load_csv_resilient("data/simulated/locations.csv", ["location_id"])
-    orders = _load_csv_resilient("data/simulated/orders.csv", ["order_id", "sku", "pick_location_id"])
+def load_inputs() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame | None, Path | None]:
+    skus = _load_csv_resilient(DATA_DIR / "skus.csv", ["sku", "velocity_per_day"])
+    locations = _load_csv_resilient(DATA_DIR / "locations.csv", ["location_id"])
+    orders = _load_csv_resilient(DATA_DIR / "orders.csv", ["order_id", "sku", "pick_location_id"])
 
     robot_logs_path = resolve_robot_logs_path()
     robot_logs = _load_csv_resilient(robot_logs_path, ["state", "timestamp_min", "duration_min"]) if robot_logs_path else None
@@ -91,14 +97,14 @@ def main() -> None:
     # ---- Load inputs ----
     skus, locations, orders, robot_logs, robot_logs_path = load_inputs()
     if robot_logs_path:
-        print(f"Using robot logs: {robot_logs_path}")
+        print(f"Using robot logs: {robot_logs_path.as_posix()}")
     else:
         print("Using robot logs: none found (ROBOT_DELAY signal disabled)")
 
     # ---- Build ABC + home locations ----
     sku_abc = build_abc_classes(skus)
     sku_home = infer_sku_home_locations(orders, locations)
-    sku_home = apply_slotting_moves_if_present(sku_home, "output/reports/move_list_top50.csv")
+    sku_home = apply_slotting_moves_if_present(sku_home, SLOTTING_MOVE_LIST_PATH.as_posix())
 
     # ---- Inventory snapshot ----
     inventory = generate_inventory_snapshot(
@@ -108,7 +114,7 @@ def main() -> None:
         orders=orders,
         seed=seed,
     )
-    inv_path = "data/simulated/inventory_snapshot.csv"
+    inv_path = DATA_DIR / "inventory_snapshot.csv"
     inventory.to_csv(inv_path, index=False)
 
     # Inventory accuracy report (high-level)
@@ -126,7 +132,7 @@ def main() -> None:
             }
         ]
     )
-    inv_accuracy_path = "output/reports/inventory_accuracy.csv"
+    inv_accuracy_path = OUTPUT_REPORTS_DIR / "inventory_accuracy.csv"
     inv_accuracy.to_csv(inv_accuracy_path, index=False)
 
     # ---- Cycle counts ----
@@ -136,12 +142,12 @@ def main() -> None:
         top_n_a=30,
         random_n=20,
     )
-    cc_path = "data/simulated/cycle_counts.csv"
-    cycle_counts.to_csv(cc_path, index=False)
+    cycle_counts_path = DATA_DIR / "cycle_counts.csv"
+    cycle_counts.to_csv(cycle_counts_path, index=False)
 
-    cc_results = summarize_cycle_counts(cycle_counts)
-    cc_results_path = "output/reports/cycle_count_results.csv"
-    cc_results.to_csv(cc_results_path, index=False)
+    cycle_count_results = summarize_cycle_counts(cycle_counts)
+    cycle_count_results_path = OUTPUT_REPORTS_DIR / "cycle_count_results.csv"
+    cycle_count_results.to_csv(cycle_count_results_path, index=False)
 
     # ---- Exceptions + SLA ----
     exceptions = generate_exceptions(
@@ -150,42 +156,44 @@ def main() -> None:
         robot_logs=robot_logs,
         seed=seed,
     )
-    exc_path = "output/reports/exceptions.csv"
-    exceptions.to_csv(exc_path, index=False)
+    exceptions_path = OUTPUT_REPORTS_DIR / "exceptions.csv"
+    exceptions.to_csv(exceptions_path, index=False)
 
-    sla = summarize_exception_sla(exceptions)
-    sla_path = "output/reports/exception_resolution_sla.csv"
-    sla.to_csv(sla_path, index=False)
+    exception_sla = summarize_exception_sla(exceptions)
+    exception_sla_path = OUTPUT_REPORTS_DIR / "exception_resolution_sla.csv"
+    exception_sla.to_csv(exception_sla_path, index=False)
 
     # ---- Audit evidence pack ----
     inputs = [
-        "data/simulated/locations.csv",
-        "data/simulated/skus.csv",
-        "data/simulated/orders.csv",
+        DATA_DIR / "locations.csv",
+        DATA_DIR / "skus.csv",
+        DATA_DIR / "orders.csv",
     ]
     if robot_logs is not None and robot_logs_path:
         inputs.append(robot_logs_path)
-    # Week 3 optional
-    if os.path.exists("output/reports/move_list_top50.csv"):
-        inputs.append("output/reports/move_list_top50.csv")
+    if SLOTTING_MOVE_LIST_PATH.exists():
+        inputs.append(SLOTTING_MOVE_LIST_PATH)
+
+    run_manifest_path = OUTPUT_AUDIT_DIR / "run_manifest.json"
+    evidence_index_path = OUTPUT_AUDIT_DIR / "evidence_index.md"
 
     outputs = [
         inv_path,
-        cc_path,
+        cycle_counts_path,
         inv_accuracy_path,
-        cc_results_path,
-        exc_path,
-        sla_path,
-        "output/audit/run_manifest.json",
-        "output/audit/evidence_index.md",
+        cycle_count_results_path,
+        exceptions_path,
+        exception_sla_path,
+        run_manifest_path,
+        evidence_index_path,
     ]
 
     write_run_manifest(
-        out_path="output/audit/run_manifest.json",
+        out_path=run_manifest_path.as_posix(),
         run_id=run_id,
         seed=seed,
-        inputs=inputs,
-        outputs=[p for p in outputs if p.endswith(".csv")],
+        inputs=[path.as_posix() for path in inputs],
+        outputs=[path.as_posix() for path in outputs if path.suffix.lower() == ".csv"],
         extra={
             "python_version": platform.python_version(),
             "platform": platform.platform(),
@@ -193,27 +201,27 @@ def main() -> None:
     )
 
     write_evidence_index(
-        out_path="output/audit/evidence_index.md",
+        out_path=evidence_index_path.as_posix(),
         run_id=run_id,
         seed=seed,
-        input_files=inputs,
+        input_files=[path.as_posix() for path in inputs],
         key_outputs={
-            "Inventory snapshot": inv_path,
-            "Cycle counts": cc_path,
-            "Inventory accuracy summary": inv_accuracy_path,
-            "Cycle count results summary": cc_results_path,
-            "Exceptions log": exc_path,
-            "Exception SLA summary": sla_path,
-            "Run manifest": "output/audit/run_manifest.json",
+            "Inventory snapshot": inv_path.as_posix(),
+            "Cycle counts": cycle_counts_path.as_posix(),
+            "Inventory accuracy summary": inv_accuracy_path.as_posix(),
+            "Cycle count results summary": cycle_count_results_path.as_posix(),
+            "Exceptions log": exceptions_path.as_posix(),
+            "Exception SLA summary": exception_sla_path.as_posix(),
+            "Run manifest": run_manifest_path.as_posix(),
         },
     )
 
     print("DONE: Week 5 generated:")
-    for p in outputs:
-        if os.path.exists(p):
-            print(f" - {p}")
+    for path in outputs:
+        if path.exists():
+            print(f" - {path.as_posix()}")
         else:
-            print(f" - (missing) {p}")
+            print(f" - (missing) {path.as_posix()}")
 
 
 if __name__ == "__main__":

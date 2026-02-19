@@ -60,7 +60,7 @@ def write_evidence_index(out_path: str, run_id: str, seed: int, input_files: lis
     lines.extend(
         [
             "",
-            "## Outputs (Evidence Artifacts)",
+            "## Outputs (Evidence )",
             "",
         ]
     )

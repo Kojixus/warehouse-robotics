@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from heatmap_plot import plot_annotated_delta_heatmap
+from heatmap_plot import plot_slotting_split_heatmaps, plot_slotting_story_heatmap
 from slotting_logic import (
     apply_slotting_to_orders,
     assign_abc_classes,
@@ -87,7 +87,7 @@ def main() -> None:
     )
     slotting_kpis.to_csv(OUTPUT_DIR / "reports" / "slotting_kpis.csv", index=False)
 
-    # 7) Slotting impact heatmap (delta only)
+    # 7) Slotting impact heatmap (before vs after vs delta)
     before_grid, x_labels, y_labels = build_pick_density_grid_from_orders(
         locations,
         orders,
@@ -99,20 +99,32 @@ def main() -> None:
         fill_empty_with_zero=True,
     )
 
-    plot_annotated_delta_heatmap(
+    plot_slotting_split_heatmaps(
         before_2d=before_grid,
         after_2d=after_grid,
         x_labels=x_labels,
         y_labels=y_labels,
-        title="Pick Density DELTA (After - Before)",
-        cbar_label="Delta pick count (order lines)",
+        out_before_path=str(OUTPUT_DIR / "charts" / "heatmap_slotting_before.png"),
+        out_after_path=str(OUTPUT_DIR / "charts" / "heatmap_slotting_after.png"),
+        out_delta_path=str(OUTPUT_DIR / "charts" / "heatmap_slotting_delta.png"),
+        top_n_annotations=22,
+    )
+    plot_slotting_story_heatmap(
+        before_2d=before_grid,
+        after_2d=after_grid,
+        x_labels=x_labels,
+        y_labels=y_labels,
         out_path=str(OUTPUT_DIR / "charts" / "heatmap_slotting_impact.png"),
+        top_n_annotations=22,
     )
 
     print("DONE: Week 3 outputs generated:")
     print(" - output/reports/abc_summary.csv")
     print(" - output/reports/move_list_top50.csv")
     print(" - output/reports/slotting_kpis.csv")
+    print(" - output/charts/heatmap_slotting_before.png")
+    print(" - output/charts/heatmap_slotting_after.png")
+    print(" - output/charts/heatmap_slotting_delta.png")
     print(" - output/charts/heatmap_slotting_impact.png")
 
 

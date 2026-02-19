@@ -1,0 +1,4 @@
+exception_type,count,pct_within_sla,avg_resolution_min,sla_breaches
+ROBOT_DELAY,14,42.86,48.36,8
+LOCATION_BLOCKED,14,64.29,50.29,5
+DAMAGED,17,88.24,54.94,2

@@ -1,0 +1,46 @@
+exception_id,order_id,sku,location_id,exception_type,severity,created_time_min,resolved_time_min,sla_target_min,status,owner_role,notes,resolution_time_min,within_sla
+EXC00018,ORD0289,SKU0372,B10-09,LOCATION_BLOCKED,WARN,3,39,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,36,True
+EXC00023,ORD0370,SKU0411,C06-06,LOCATION_BLOCKED,WARN,14,96,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,82,False
+EXC00010,ORD0121,SKU0090,B14-07,ROBOT_DELAY,WARN,28,106,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,78,False
+EXC00011,ORD0121,SKU0380,C18-07,ROBOT_DELAY,WARN,28,47,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,19,True
+EXC00016,ORD0278,SKU0093,A17-04,ROBOT_DELAY,WARN,28,76,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,48,False
+EXC00039,ORD0706,SKU0231,A08-01,ROBOT_DELAY,WARN,28,103,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,75,False
+EXC00029,ORD0566,SKU0303,B16-05,ROBOT_DELAY,WARN,33,56,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,23,True
+EXC00007,ORD0116,SKU0215,C17-04,ROBOT_DELAY,WARN,34,78,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,44,True
+EXC00008,ORD0116,SKU0242,B01-02,ROBOT_DELAY,WARN,34,62,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,28,True
+EXC00034,ORD0614,SKU0180,A17-09,ROBOT_DELAY,WARN,35,85,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,50,False
+EXC00025,ORD0388,SKU0553,A11-01,DAMAGED,WARN,56,105,90,CLOSED,qa,Unit damaged; re-pick or replace required.,49,True
+EXC00040,ORD0710,SKU0134,C01-09,DAMAGED,WARN,90,103,90,CLOSED,qa,Unit damaged; re-pick or replace required.,13,True
+EXC00013,ORD0267,SKU0584,B10-02,ROBOT_DELAY,WARN,105,126,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,21,True
+EXC00003,ORD0037,SKU0114,A20-06,LOCATION_BLOCKED,WARN,107,158,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,51,True
+EXC00009,ORD0120,SKU0564,C14-04,ROBOT_DELAY,WARN,107,155,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,48,False
+EXC00020,ORD0353,SKU0174,D10-09,DAMAGED,WARN,144,205,90,CLOSED,qa,Unit damaged; re-pick or replace required.,61,True
+EXC00006,ORD0082,SKU0208,A02-02,LOCATION_BLOCKED,WARN,147,227,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,80,False
+EXC00038,ORD0701,SKU0370,A07-07,LOCATION_BLOCKED,WARN,148,236,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,88,False
+EXC00027,ORD0520,SKU0502,A10-07,DAMAGED,WARN,164,245,90,CLOSED,qa,Unit damaged; re-pick or replace required.,81,True
+EXC00022,ORD0364,SKU0373,A12-03,ROBOT_DELAY,WARN,182,245,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,63,False
+EXC00005,ORD0049,SKU0168,A14-03,DAMAGED,WARN,219,305,90,CLOSED,qa,Unit damaged; re-pick or replace required.,86,True
+EXC00015,ORD0273,SKU0246,A14-03,LOCATION_BLOCKED,WARN,245,259,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,14,True
+EXC00033,ORD0603,SKU0203,A14-08,LOCATION_BLOCKED,WARN,263,317,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,54,True
+EXC00035,ORD0622,SKU0048,A13-05,DAMAGED,WARN,286,365,90,CLOSED,qa,Unit damaged; re-pick or replace required.,79,True
+EXC00021,ORD0360,SKU0032,C11-10,DAMAGED,WARN,328,360,90,CLOSED,qa,Unit damaged; re-pick or replace required.,32,True
+EXC00041,ORD0713,SKU0371,A19-01,DAMAGED,WARN,334,454,90,CLOSED,qa,Unit damaged; re-pick or replace required.,120,False
+EXC00045,ORD0763,SKU0563,B05-01,DAMAGED,WARN,347,401,90,CLOSED,qa,Unit damaged; re-pick or replace required.,54,True
+EXC00014,ORD0270,SKU0088,D03-01,DAMAGED,WARN,353,472,90,CLOSED,qa,Unit damaged; re-pick or replace required.,119,False
+EXC00002,ORD0022,SKU0092,D05-08,DAMAGED,WARN,354,431,90,CLOSED,qa,Unit damaged; re-pick or replace required.,77,True
+EXC00028,ORD0532,SKU0411,D03-02,ROBOT_DELAY,WARN,378,454,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,76,False
+EXC00012,ORD0239,SKU0571,C13-05,ROBOT_DELAY,WARN,379,439,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,60,False
+EXC00017,ORD0286,SKU0073,A04-09,ROBOT_DELAY,WARN,381,425,45,CLOSED,ops_supervisor,Order delayed due to elevated robot fault pressure window.,44,True
+EXC00036,ORD0623,SKU0304,A19-01,LOCATION_BLOCKED,WARN,385,428,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,43,True
+EXC00024,ORD0375,SKU0260,C02-01,LOCATION_BLOCKED,WARN,398,473,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,75,False
+EXC00019,ORD0315,SKU0493,A02-09,DAMAGED,WARN,404,479,90,CLOSED,qa,Unit damaged; re-pick or replace required.,75,True
+EXC00043,ORD0757,SKU0452,A02-02,LOCATION_BLOCKED,WARN,417,479,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,62,False
+EXC00044,ORD0757,SKU0583,A13-02,LOCATION_BLOCKED,WARN,418,457,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,39,True
+EXC00042,ORD0726,SKU0551,A14-03,DAMAGED,WARN,424,479,90,CLOSED,qa,Unit damaged; re-pick or replace required.,55,True
+EXC00037,ORD0679,SKU0267,C01-01,LOCATION_BLOCKED,WARN,425,479,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,54,True
+EXC00001,ORD0002,SKU0273,B13-09,DAMAGED,WARN,455,479,90,CLOSED,qa,Unit damaged; re-pick or replace required.,24,True
+EXC00030,ORD0572,SKU0589,B11-10,LOCATION_BLOCKED,WARN,460,479,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,19,True
+EXC00032,ORD0598,SKU0155,A06-02,LOCATION_BLOCKED,WARN,472,479,60,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,7,True
+EXC00031,ORD0573,SKU0572,B01-01,DAMAGED,WARN,473,479,90,CLOSED,qa,Unit damaged; re-pick or replace required.,6,True
+EXC00004,ORD0043,SKU0132,C04-04,DAMAGED,WARN,476,479,90,CLOSED,qa,Unit damaged; re-pick or replace required.,3,True
+EXC00026,ORD0397,SKU0014,A14-08,DAMAGED,WARN,479,479,90,CLOSED,qa,Unit damaged; re-pick or replace required.,0,True
