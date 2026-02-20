@@ -1,7 +1,10 @@
 import hashlib
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+ETC_TZ = ZoneInfo("Etc/GMT")
 
 
 def sha256_file(path: str) -> str:
@@ -24,11 +27,11 @@ def _file_entry(path: str) -> dict:
 
 
 def write_run_manifest(out_path: str, run_id: str, seed: int, inputs: list, outputs: list, extra: dict) -> None:
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ts = datetime.now(ETC_TZ).strftime("%Y-%m-%dT%H:%M:%S ETC")
 
     manifest = {
         "run_id": run_id,
-        "timestamp_utc": ts,
+        "timestamp_etc": ts,
         "seed": int(seed),
         "inputs": [_file_entry(path) for path in inputs],
         "outputs": [_file_entry(path) for path in outputs],
@@ -41,13 +44,13 @@ def write_run_manifest(out_path: str, run_id: str, seed: int, inputs: list, outp
 
 
 def write_evidence_index(out_path: str, run_id: str, seed: int, input_files: list, key_outputs: dict) -> None:
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ts = datetime.now(ETC_TZ).strftime("%Y-%m-%dT%H:%M:%S ETC")
 
     lines = [
         "# Audit Evidence Index",
         "",
         f"- Run ID: **{run_id}**",
-        f"- Timestamp (UTC): **{ts}**",
+        f"- Timestamp (ETC): **{ts}**",
         f"- Seed: **{seed}**",
         "",
         "## Inputs",

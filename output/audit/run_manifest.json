@@ -39,8 +39,8 @@
     {
       "exists": true,
       "path": "data/simulated/inventory_snapshot.csv",
-      "sha256": "6f38f1a953ce863b509958b9b445c2961238f99e8b3af0e2f373641138daa8a6",
-      "size_bytes": 39780
+      "sha256": "67d096ec59a4e25f8dfa6ba265bda5452120d330a03ee3c41f347b561e8b8c23",
+      "size_bytes": 41580
     },
     {
       "exists": true,
@@ -51,8 +51,8 @@
     {
       "exists": true,
       "path": "output/reports/inventory_accuracy.csv",
-      "sha256": "05bb05e8aa391a772ef812ceeb83fd25b4bfd70ff62b5e0e7f82c23128825031",
-      "size_bytes": 170
+      "sha256": "98dca801cac26644fba59f44f41a6bedc6a86fcc59f83f8629ee64a808fb2f95",
+      "size_bytes": 173
     },
     {
       "exists": true,
@@ -73,7 +73,7 @@
       "size_bytes": 160
     }
   ],
-  "run_id": "run_20260218T214234Z_65b87b1e",
+  "run_id": "run_20260220T183659ETC_18d06b3a",
   "seed": 42,
-  "timestamp_utc": "2026-02-18T21:42:34Z"
+  "timestamp_etc": "2026-02-20T18:36:59 ETC"
 }

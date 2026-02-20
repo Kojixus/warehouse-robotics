@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import platform
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
+
+ETC_TZ = ZoneInfo("Etc/GMT")
 
 try:
     from .inventory import (
@@ -92,7 +95,7 @@ def main() -> None:
 
     # ---- Config ----
     seed = 42
-    run_id = f"run_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}_{uuid.uuid4().hex[:8]}"
+    run_id = f"run_{datetime.now(ETC_TZ).strftime('%Y%m%dT%H%M%S')}ETC_{uuid.uuid4().hex[:8]}"
 
     # ---- Load inputs ----
     skus, locations, orders, robot_logs, robot_logs_path = load_inputs()
@@ -121,7 +124,7 @@ def main() -> None:
     inv_accuracy = pd.DataFrame(
         [
             {
-                "snapshot_utc": inventory["snapshot_utc"].iloc[0] if not inventory.empty else "",
+                "snapshot_etc": inventory["snapshot_etc"].iloc[0] if not inventory.empty else "",
                 "sku_count": int(inventory["sku"].nunique()) if not inventory.empty else 0,
                 "total_on_hand_units": int(inventory["on_hand_qty"].sum()) if not inventory.empty else 0,
                 "total_reserved_units": int(inventory["reserved_qty"].sum()) if not inventory.empty else 0,

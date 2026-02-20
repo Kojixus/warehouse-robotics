@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import shutil
-from datetime import datetime, timezone
+from datetime import datetime
 from html import escape
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -12,6 +13,7 @@ OUTPUT_DIR = PROJECT_ROOT / "output"
 PORTFOLIO_DIR = OUTPUT_DIR / "portfolio"
 ASSETS_DIR = PORTFOLIO_DIR / "assets"
 DOCS_DIR = PROJECT_ROOT / "docs"
+ETC_TZ = ZoneInfo("Etc/GMT")
 
 EXPECTED_FILES: dict[str, str] = {
     "Pick Path KPI Comparison": "output/reports/kpi_comparison.csv",
@@ -315,7 +317,8 @@ def prettify_column_name(column_name: object) -> str:
         "qty": "Qty",
         "sku": "SKU",
         "sla": "SLA",
-        "utc": "UTC",
+        "utc": "ETC",
+        "etc": "ETC",
         "wes": "WES",
         "wms": "WMS",
     }
@@ -428,7 +431,7 @@ def build_download_groups_html(groups: dict[str, list[tuple[str, str]]]) -> str:
 
 
 def build_dashboard() -> tuple[str, list[str]]:
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    generated_at = datetime.now(ETC_TZ).strftime("%Y-%m-%d %H:%M ETC")
 
     kpi_comp = safe_read_csv(project_path(EXPECTED_FILES["Pick Path KPI Comparison"]))
     slot_kpis = safe_read_csv(project_path(EXPECTED_FILES["Slotting KPIs"]))
@@ -1476,7 +1479,7 @@ python src/portfolio/run_portfolio_pack.py</code></pre>
 
 
 def build_credits_page_html() -> str:
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    generated_at = datetime.now(ETC_TZ).strftime("%Y-%m-%d %H:%M ETC")
     return f"""<!doctype html>
 <html lang="en">
 <head>
