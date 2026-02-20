@@ -18,27 +18,3 @@ Quickstart
 4. python src/pick_path/simulate_orders.py
 5. python src/pick_path/analyze_routes.py
 6. open outputs in /output/
-
-Demo output
-
-KPIs (definitions + how computed)
-
-Project Infomation
-
-Link to:
-Charter
-WBS
-Risk register
-Change log
-Schedule outline
-
-Roadmap
-
-Tech stack
-
-1. Github
-2. Power Bi Desktop
-3. draw.io
-4. Python (requirements.txt)
-5. ChatGPT CodeX
-6. Canva
