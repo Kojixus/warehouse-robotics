@@ -1,7 +1,7 @@
 # Warehouse Optimization and Robotics Ops Portfolio
 
 ## Scope
-This portfolio demonstrates: pick path optimization -> slotting strategy -> control tower KPIs -> audit-ready evidence -> scenario risk simulation.
+This portfolio demonstrates: pick path optimization -> slotting strategy -> operations KPIs -> audit-ready evidence -> scenario risk simulation.
 
 ## Delivered modules
 - Week 2: pick path routing analysis and comparison KPIs.

@@ -10,6 +10,37 @@ This project uses a practical semantic versioning approach:
 
 ---
 
+## [v1.4.3] - 2026-02-20
+
+### Changed
+
+- **Week 4 folder and path rename to Operations**
+  - Updated runtime entrypoint from `src/control_tower/run_control_tower.py` to `src/operations/run_operations.py`.
+  - Updated pipeline step key from `control_tower` to `operations`.
+  - Added backward-compatible alias: `python main.py control_tower` maps to `operations`.
+  - Updated docs/portfolio references to use `src/operations/run_operations.py`.
+
+- **Operations log output path migration**
+  - Primary Week 4 output path is now:
+    - `output/operations_data/simulated/robot_logs.csv`
+  - Legacy compatibility path remains available:
+    - `output/control_tower_data/simulated/robot_logs.csv`
+  - Downstream modules now check both new and legacy locations.
+
+- **Timezone standardization to EST**
+  - Audit and inventory timestamps now use `EST` labels.
+  - Manifest and inventory timestamp fields were updated:
+    - `timestamp_est`
+    - `snapshot_est`
+
+### Docs
+
+- Refreshed `README.md` with current pipeline modules, commands, and outputs.
+- Added a visual gallery to `README.md` using generated charts from `output/charts/*`.
+- Added a dedicated `Credits` section to `README.md` with stack and module attribution.
+
+---
+
 ## [v1.4.2] - 2026-02-18
 
 ### Changed
@@ -33,12 +64,13 @@ This project uses a practical semantic versioning approach:
 ### Fixed
 
 - **Robot log alignment across pipelines**
-  - `src/control_tower/run_control_tower.py` now writes robot logs to both:
-    - `output/control_tower_data/simulated/robot_logs.csv`
+  - `src/operations/run_operations.py` now writes robot logs to both:
+    - `output/operations_data/simulated/robot_logs.csv`
     - `data/simulated/robot_logs.csv` (canonical path for downstream consumers)
   - `src/audit_ready/run_audit_pack.py` now resolves robot logs from compatible locations:
     - `data/simulated/robot_logs.csv`
-    - `output/control_tower_data/simulated/robot_logs.csv`
+    - `output/operations_data/simulated/robot_logs.csv`
+    - `output/control_tower_data/simulated/robot_logs.csv` (legacy fallback)
     - `output/simulated/robot_logs.csv` (legacy fallback)
   - Audit evidence inputs now include the resolved robot log file path when present.
 
@@ -75,15 +107,15 @@ This project uses a practical semantic versioning approach:
 
 ### Fixed
 
-- **Control Tower reliability hardening**
-  - Corrected runtime issues and path mismatches across `src/control_tower/*`
+- **Operations reliability hardening**
+  - Corrected runtime issues and path mismatches across `src/operations/*`
   - Improved simulator and pipeline entrypoint correctness and determinism
   - Hardened KPI/alerts/ops brief/plot modules for robustness and performance
 
 ### Validation
 
 - Completed verification workflow:
-  - Import/compile checks for Control Tower modules
+  - Import/compile checks for Operations modules
   - End-to-end pipeline execution (log generation → KPIs → alerts → ops brief → charts)
   - Outputs reviewed for completeness and consistency
 
@@ -97,7 +129,7 @@ This project uses a practical semantic versioning approach:
 
 ### Added
 
-- **Week 4: Robotics Control Tower (AMR Fleet Ops)**
+- **Week 4: Robotics Operations (AMR Fleet Ops)**
   - Simulation log output: `data/simulated/robot_logs.csv`
   - Fleet KPI outputs:
     - `output/reports/fleet_kpis_daily.csv`
@@ -107,11 +139,11 @@ This project uses a practical semantic versioning approach:
   - Operational charts:
     - `output/charts/utilization_over_time.png`
     - `output/charts/faults_over_time.png`
-  - One-command entrypoint: `python src/control_tower/run_control_tower.py`
+  - One-command entrypoint: `python src/operations/run_operations.py`
 
 ### Notes
 
-- Control Tower simulation is seeded for repeatability and designed as a portfolio-grade operational model (not a production WMS integration).
+- Operations simulation is seeded for repeatability and designed as a portfolio-grade operational model (not a production WMS integration).
 
 ---
 

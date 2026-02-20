@@ -36,6 +36,7 @@ OUTPUT_AUDIT_DIR = Path("output/audit")
 SLOTTING_MOVE_LIST_PATH = OUTPUT_REPORTS_DIR / "move_list_top50.csv"
 ROBOT_LOG_CANDIDATES: tuple[Path, ...] = (
     DATA_DIR / "robot_logs.csv",
+    Path("output/operations_data/simulated/robot_logs.csv"),
     Path("output/control_tower_data/simulated/robot_logs.csv"),
     Path("output/simulated/robot_logs.csv"),
 )

@@ -18,11 +18,14 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 PIPELINE_STEPS: tuple[PipelineStep, ...] = (
     PipelineStep("pick_path", "Pick Path Analysis", PROJECT_ROOT / "src" / "pick_path" / "analyze_routes.py"),
     PipelineStep("slotting", "Slotting Optimization", PROJECT_ROOT / "src" / "slotting" / "run_slotting.py"),
-    PipelineStep("control_tower", "Control Tower", PROJECT_ROOT / "src" / "control_tower" / "run_control_tower.py"),
+    PipelineStep("operations", "Operations", PROJECT_ROOT / "src" / "operations" / "run_operations.py"),
     PipelineStep("scenarios", "Scenario Simulation", PROJECT_ROOT / "src" / "scenarios" / "run_scenarios.py"),
     PipelineStep("audit_pack", "Audit Pack", PROJECT_ROOT / "src" / "audit_ready" / "run_audit_pack.py"),
     PipelineStep("portfolio_pack", "Portfolio Pack", PROJECT_ROOT / "src" / "portfolio" / "run_portfolio_pack.py"),
 )
+STEP_ALIASES: dict[str, str] = {
+    "control_tower": "operations",
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -75,9 +78,16 @@ def validate_step_keys(keys: set[str]) -> None:
         )
 
 
+def normalize_step_key(key: str) -> str:
+    return STEP_ALIASES.get(key, key)
+
+
 def select_steps(include: list[str], skip: list[str]) -> list[PipelineStep]:
-    include_set = set(include) if include else {step.key for step in PIPELINE_STEPS}
-    skip_set = set(skip)
+    include_set_raw = set(include) if include else {step.key for step in PIPELINE_STEPS}
+    skip_set_raw = set(skip)
+
+    include_set = {normalize_step_key(key) for key in include_set_raw}
+    skip_set = {normalize_step_key(key) for key in skip_set_raw}
 
     validate_step_keys(include_set | skip_set)
 

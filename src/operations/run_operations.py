@@ -19,8 +19,10 @@ except ImportError:
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PROJECT_ROOT / "data" / "simulated"
 OUTPUT_DIR = PROJECT_ROOT / "output"
-CONTROL_TOWER_DIR = OUTPUT_DIR / "control_tower_data"
-SIMULATED_DIR = CONTROL_TOWER_DIR / "simulated"
+OPERATIONS_DIR = OUTPUT_DIR / "operations_data"
+LEGACY_CONTROL_TOWER_DIR = OUTPUT_DIR / "control_tower_data"
+SIMULATED_DIR = OPERATIONS_DIR / "simulated"
+LEGACY_SIMULATED_DIR = LEGACY_CONTROL_TOWER_DIR / "simulated"
 REPORTS_DIR = OUTPUT_DIR / "reports"
 CANONICAL_LOG_PATH = DATA_DIR / "robot_logs.csv"
 
@@ -32,6 +34,7 @@ RANDOM_SEED = 42
 def ensure_dirs() -> None:
     os.makedirs(DATA_DIR, exist_ok=True)
     os.makedirs(SIMULATED_DIR, exist_ok=True)
+    os.makedirs(LEGACY_SIMULATED_DIR, exist_ok=True)
     os.makedirs(REPORTS_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR / "charts", exist_ok=True)
 
@@ -74,6 +77,8 @@ def main() -> None:
         random_seed=RANDOM_SEED,
     )
     robot_logs.to_csv(SIMULATED_DIR / "robot_logs.csv", index=False)
+    # Keep legacy output path during folder rename migration.
+    robot_logs.to_csv(LEGACY_SIMULATED_DIR / "robot_logs.csv", index=False)
     # Keep a canonical copy in data/simulated for downstream pipelines.
     robot_logs.to_csv(CANONICAL_LOG_PATH, index=False)
 
@@ -93,8 +98,9 @@ def main() -> None:
     )
     make_charts(robot_logs, shift_minutes=SHIFT_MINUTES)
 
-    print("DONE: Control Tower outputs generated")
+    print("DONE: Operations outputs generated")
     print(f" - {SIMULATED_DIR.relative_to(PROJECT_ROOT).as_posix()}/robot_logs.csv")
+    print(f" - {LEGACY_SIMULATED_DIR.relative_to(PROJECT_ROOT).as_posix()}/robot_logs.csv")
     print(f" - {CANONICAL_LOG_PATH.relative_to(PROJECT_ROOT).as_posix()}")
     print(f" - {REPORTS_DIR.relative_to(PROJECT_ROOT).as_posix()}/fleet_daily_kpis.csv")
     print(f" - {REPORTS_DIR.relative_to(PROJECT_ROOT).as_posix()}/robot_kpis.csv")

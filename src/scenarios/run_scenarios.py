@@ -84,6 +84,7 @@ def read_simulation_csv(path: str, expected_cols: Iterable[str]) -> pd.DataFrame
 def resolve_robot_logs_path() -> Path | None:
     candidates = [
         Path("data/simulated/robot_logs.csv"),
+        Path("output/operations_data/simulated/robot_logs.csv"),
         Path("output/control_tower_data/simulated/robot_logs.csv"),
         Path("output/simulated/robot_logs.csv"),
     ]
