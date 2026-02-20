@@ -62,7 +62,7 @@ Mathmatics (coding)
 - Week 1: Setup + baseline simulation + program Data
 - Week 2: Pick path heuristics + route visualization
 - Week 3: Slotting optimization + move list + heatmaps
-- Week 4: Fleet control tower KPIs + alerts + ops brief
+- Week 4: Fleet operations KPIs + alerts + ops brief
 - Week 5-6: Bug-testing and code optimization
 - Weeks 7: README polish + video demo + LinkedIn
 
