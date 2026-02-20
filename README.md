@@ -1,20 +1,80 @@
 # warehouse-robotics
 
-Warehouse Robotics Efficiency Program (Simulation + Analytics)
+Warehouse Robotics Efficiency Program (simulation + analytics).
 
-What is this Project?
+## Overview
 
-This project is a simulation of a warehouse environment to demonstrate a pick-path optimization based on distance for time reduction, using a robotic slotting system with a layout strategy in place using an ABC + move list system. The robotics operation includes a monitoring system that helps with fleet utilization, so a robot is always moving, including alerts if a bottleneck occurs.
+This project simulates warehouse operations and produces portfolio-ready artifacts across:
 
-Why does this matter?
+- Week 2: pick path optimization (`src/pick_path`)
+- Week 3: slotting optimization (`src/slotting`)
+- Week 4: operations KPIs, alerts, and ops brief (`src/operations`)
+- Week 5: audit-ready evidence pack (`src/audit_ready`)
+- Week 6: scenario risk simulation (`src/scenarios`)
+- Week 7: portfolio packaging and dashboard (`src/portfolio`)
 
-NOTE: Once project has been built
+## Requirements
 
-Quickstart
+1. Python 3.11+ (recommended)
+2. Install dependencies:
 
-1. pip install -r requirements.txt
-2. **Optional** python.exe -m pip install --upgrade pip (for below verison 26.0.1)
-3. python src/common/generate_locations.py
-4. python src/pick_path/simulate_orders.py
-5. python src/pick_path/analyze_routes.py
-6. open outputs in /output/
+```bash
+pip install -r requirements.txt
+```
+
+## Quickstart
+
+Run the full pipeline:
+
+```bash
+python main.py
+```
+
+Useful commands:
+
+```bash
+python main.py --list
+python main.py operations
+```
+
+Notes:
+
+- `operations` is the current Week 4 step key.
+
+## Key Outputs
+
+- Reports: `output/reports`
+- Charts: `output/charts`
+- Audit evidence: `output/audit`
+- Portfolio dashboard: `output/portfolio/dashboard.html`
+- Week 4 logs: `output/operations_data/simulated/robot_logs.csv`
+- Canonical logs for downstream modules: `data/simulated/robot_logs.csv`
+
+## Visual Preview
+
+Run `python main.py` first to generate the latest images.
+
+| Pick Path Baseline                                      | Slotting Impact                                                       |
+| ------------------------------------------------------- | --------------------------------------------------------------------- |
+| ![Pick Path Baseline](output/charts/route_baseline.png) | ![Slotting Impact Heatmap](output/charts/heatmap_slotting_impact.png) |
+
+| Operations Utilization                                             | Scenario Risk (SLA Breach)                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| ![Operations Utilization](output/charts/utilization_over_time.png) | ![SLA Breach Probability](output/charts/sla_breach_probability.png) |
+
+## Project Structure
+
+- `main.py`: orchestrates all pipeline steps
+- `src/`: pipeline modules by week/domain
+- `data/simulated/`: input and canonical simulated data
+- `output/`: generated reports, charts, audit files, and portfolio
+- `artifacts/project/`: charter and changelog
+
+## Credits
+
+- Program: warehouse optimization, slotting strategy, operations analytics, audit-readiness, and scenario risk simulation.
+- Code: Python, pandas, numpy, matplotlib.
+- Core pipeline modules: `src/pick_path`, `src/slotting`, `src/operations`, `src/audit_ready`, `src/scenarios`, `src/portfolio`.
+- Portfolio packaging and dashboard generation: `src/portfolio/run_portfolio_pack.py`.
+- Additional project credits/help page: `output/portfolio/credits.html`.
+- CodeX: bug fixes and to streamline quick typo's
