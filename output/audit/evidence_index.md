@@ -1,7 +1,7 @@
 # Audit Evidence Index
 
-- Run ID: **run_20260220T183659ETC_18d06b3a**
-- Timestamp (ETC): **2026-02-20T18:36:59 ETC**
+- Run ID: **run_20260220T134328EST_4aa2aaed**
+- Timestamp (EST): **2026-02-20T13:43:28 EST**
 - Seed: **42**
 
 ## Inputs

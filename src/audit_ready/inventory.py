@@ -1,11 +1,10 @@
 import os
 import random
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime, timedelta, timezone
 
 import pandas as pd
 
-ETC_TZ = ZoneInfo("Etc/GMT")
+EST_TZ = timezone(timedelta(hours=-5), name="EST")
 
 
 def _require_columns(df: pd.DataFrame, required: list[str], frame_name: str) -> None:
@@ -192,11 +191,11 @@ def generate_inventory_snapshot(
     target_stock = (df["velocity_per_day"] * target_days).round().astype(int)
     df["reorder_qty"] = (df["reorder_point"] + target_stock - df["on_hand_qty"]).clip(lower=0).astype(int)
 
-    snapshot_etc = datetime.now(ETC_TZ).strftime("%Y-%m-%dT%H:%M:%S ETC")
-    df["snapshot_etc"] = snapshot_etc
+    snapshot_est = datetime.now(EST_TZ).strftime("%Y-%m-%dT%H:%M:%S EST")
+    df["snapshot_est"] = snapshot_est
 
     cols = [
-        "snapshot_etc",
+        "snapshot_est",
         "sku",
         "abc_class",
         "velocity_per_day",
