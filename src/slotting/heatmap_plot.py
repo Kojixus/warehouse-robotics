@@ -281,10 +281,12 @@ def plot_slotting_story_heatmap(
         else:
             ax.set_ylabel("")
         ax.set_title(panel_title, fontsize=11)
-    density_cbar = fig.colorbar(density_im, ax=[axes[0], axes[1]], fraction=0.025, pad=0.02)
-    density_cbar.ax.set_ylabel("Pick count (order lines)", rotation=-90, va="bottom")
-    delta_cbar = fig.colorbar(delta_im, ax=axes[2], fraction=0.046, pad=0.03)
-    delta_cbar.ax.set_ylabel("Delta pick count", rotation=-90, va="bottom")
+    if density_im is not None:
+        density_cbar = fig.colorbar(density_im, ax=[axes[0], axes[1]], fraction=0.025, pad=0.02)
+        density_cbar.ax.set_ylabel("Pick count (order lines)", rotation=-90, va="bottom")
+    if delta_im is not None:
+        delta_cbar = fig.colorbar(delta_im, ax=axes[2], fraction=0.046, pad=0.03)
+        delta_cbar.ax.set_ylabel("Delta pick count", rotation=-90, va="bottom")
 
     finite_cells = np.argwhere(np.isfinite(delta))
     if finite_cells.size:
