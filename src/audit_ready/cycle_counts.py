@@ -24,26 +24,30 @@ def generate_cycle_counts(
     top_n_a: int = 30,
     random_n: int = 20,
 ) -> pd.DataFrame:
-    """
-    Builds a cycle count list:
-      - Top N A-items by velocity
-      - plus random sample from remaining
-    Simulates count variances and reason codes.
-    """
     if inventory_snapshot is None or inventory_snapshot.empty:
         return pd.DataFrame(columns=CYCLE_COUNT_COLUMNS)
 
     rng = random.Random(seed)
 
     inv = inventory_snapshot.copy()
-    inv["velocity_per_day"] = pd.to_numeric(inv["velocity_per_day"], errors="coerce").fillna(0.0)
-    inv["on_hand_qty"] = pd.to_numeric(inv["on_hand_qty"], errors="coerce").fillna(0).astype(int)
+    inv["velocity_per_day"] = pd.to_numeric(
+        inv["velocity_per_day"], errors="coerce"
+    ).fillna(0.0)
+    inv["on_hand_qty"] = (
+        pd.to_numeric(inv["on_hand_qty"], errors="coerce").fillna(0).astype(int)
+    )
 
-    a_items = inv[inv["abc_class"] == "A"].sort_values("velocity_per_day", ascending=False).head(top_n_a)
+    a_items = (
+        inv[inv["abc_class"] == "A"]
+        .sort_values("velocity_per_day", ascending=False)
+        .head(top_n_a)
+    )
     remainder = inv.drop(a_items.index)
 
     if not remainder.empty:
-        rand_sample = remainder.sample(n=min(random_n, len(remainder)), random_state=seed)
+        rand_sample = remainder.sample(
+            n=min(random_n, len(remainder)), random_state=seed
+        )
     else:
         rand_sample = remainder
 
@@ -115,7 +119,9 @@ def summarize_cycle_counts(cycle_counts: pd.DataFrame) -> pd.DataFrame:
         )
 
     df = cycle_counts.copy()
-    df["variance_qty"] = pd.to_numeric(df["variance_qty"], errors="coerce").fillna(0).astype(int)
+    df["variance_qty"] = (
+        pd.to_numeric(df["variance_qty"], errors="coerce").fillna(0).astype(int)
+    )
 
     counted = int(df.shape[0])
     with_var = int((df["variance_qty"] != 0).sum())

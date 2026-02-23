@@ -1,8 +1,6 @@
 import os
 from pathlib import Path
-
 import pandas as pd
-
 from heatmap_plot import plot_slotting_split_heatmaps, plot_slotting_story_heatmap
 from slotting_logic import (
     apply_slotting_to_orders,
@@ -28,9 +26,9 @@ def ensure_dirs() -> None:
 def main() -> None:
     ensure_dirs()
     for legacy_chart in (
-        OUTPUT_DIR / "charts" / "heatmap_before_annotated.png",
-        OUTPUT_DIR / "charts" / "heatmap_after_annotated.png",
-        OUTPUT_DIR / "charts" / "heatmap_delta_annotated.png",
+        OUTPUT_DIR / "charts" / "heatmap_before.png",
+        OUTPUT_DIR / "charts" / "heatmap_after.png",
+        OUTPUT_DIR / "charts" / "heatmap_delta.png",
     ):
         legacy_chart.unlink(missing_ok=True)
 
@@ -39,7 +37,7 @@ def main() -> None:
         str(DATA_DIR / "skus.csv"),
         str(DATA_DIR / "orders.csv"),
     )
-
+    
     # 1) ABC
     skus_abc, abc_summary = assign_abc_classes(skus)
     abc_summary.to_csv(OUTPUT_DIR / "reports" / "abc_summary.csv", index=False)

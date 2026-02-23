@@ -43,12 +43,6 @@ def plot_annotated_heatmap(
     cbar_label: str,
     out_path: str,
 ) -> None:
-    """
-    Creates an annotated heatmap.
-    Uses NaN to represent empty/non-location cells.
-    Annotates only finite cells.
-    """
-
     fig, ax = plt.subplots()
     im = ax.imshow(data_2d, origin="lower", cmap="YlOrRd", interpolation="nearest")
 
@@ -139,7 +133,9 @@ def plot_annotated_delta_heatmap(
     cmap.set_bad(color="#ff0000")
     masked_delta = np.ma.masked_invalid(delta)
     norm = TwoSlopeNorm(vmin=-max_abs, vcenter=0.0, vmax=max_abs)
-    im = ax.imshow(masked_delta, origin="lower", cmap=cmap, norm=norm, interpolation="nearest")
+    im = ax.imshow(
+        masked_delta, origin="lower", cmap=cmap, norm=norm, interpolation="nearest"
+    )
 
     x_tick_idx = _label_tick_positions(len(x_labels))
     y_tick_idx = _label_tick_positions(len(y_labels))
@@ -176,13 +172,22 @@ def plot_annotated_delta_heatmap(
             v = delta[i, j]
             display_value = int(v) if float(v).is_integer() else round(float(v), 2)
             value_str = f"{display_value:+}" if display_value != 0 else "+0"
-            before_str = int(before_v) if float(before_v).is_integer() else round(float(before_v), 2)
-            after_str = int(after_v) if float(after_v).is_integer() else round(float(after_v), 2)
+            before_str = (
+                int(before_v)
+                if float(before_v).is_integer()
+                else round(float(before_v), 2)
+            )
+            after_str = (
+                int(after_v)
+                if float(after_v).is_integer()
+                else round(float(after_v), 2)
+            )
             ax.text(
                 j,
                 i,
                 f"{value_str}\n{before_str}->{after_str}",
-                ha="center", va="center",
+                ha="center",
+                va="center",
                 color="white" if abs(v) > threshold else "black",
                 fontsize=7,
                 linespacing=0.9,
@@ -248,7 +253,9 @@ def plot_slotting_story_heatmap(
     if delta_scale <= 0:
         delta_scale = 1.0
 
-    delta_norm = TwoSlopeNorm(vmin=-float(delta_scale), vcenter=0.0, vmax=float(delta_scale))
+    delta_norm = TwoSlopeNorm(
+        vmin=-float(delta_scale), vcenter=0.0, vmax=float(delta_scale)
+    )
     delta_cmap = LinearSegmentedColormap.from_list(
         "slotting_delta",
         ["#08306B", "#4292C6", "#F7FBFF", "#FC9272", "#99000D"],
@@ -267,11 +274,23 @@ def plot_slotting_story_heatmap(
     for idx, (ax, grid_data, panel_title) in enumerate(panels):
         masked = np.ma.masked_invalid(grid_data)
         if idx < 2:
-            im = ax.imshow(masked, origin="lower", cmap=density_cmap, norm=density_norm, interpolation="nearest")
+            im = ax.imshow(
+                masked,
+                origin="lower",
+                cmap=density_cmap,
+                norm=density_norm,
+                interpolation="nearest",
+            )
             if density_im is None:
                 density_im = im
         else:
-            im = ax.imshow(masked, origin="lower", cmap=delta_cmap, norm=delta_norm, interpolation="nearest")
+            im = ax.imshow(
+                masked,
+                origin="lower",
+                cmap=delta_cmap,
+                norm=delta_norm,
+                interpolation="nearest",
+            )
             delta_im = im
         _configure_axis_ticks(ax, x_labels=x_labels, y_labels=y_labels)
         _apply_cell_grid(ax, width=width, height=height)
@@ -282,8 +301,12 @@ def plot_slotting_story_heatmap(
             ax.set_ylabel("")
         ax.set_title(panel_title, fontsize=11)
     if density_im is not None:
-        density_cbar = fig.colorbar(density_im, ax=[axes[0], axes[1]], fraction=0.025, pad=0.02)
-        density_cbar.ax.set_ylabel("Pick count (order lines)", rotation=-90, va="bottom")
+        density_cbar = fig.colorbar(
+            density_im, ax=[axes[0], axes[1]], fraction=0.025, pad=0.02
+        )
+        density_cbar.ax.set_ylabel(
+            "Pick count (order lines)", rotation=-90, va="bottom"
+        )
     if delta_im is not None:
         delta_cbar = fig.colorbar(delta_im, ax=axes[2], fraction=0.046, pad=0.03)
         delta_cbar.ax.set_ylabel("Delta pick count", rotation=-90, va="bottom")
@@ -359,7 +382,9 @@ def plot_slotting_split_heatmaps(
     if delta_scale <= 0:
         delta_scale = 1.0
 
-    delta_norm = TwoSlopeNorm(vmin=-float(delta_scale), vcenter=0.0, vmax=float(delta_scale))
+    delta_norm = TwoSlopeNorm(
+        vmin=-float(delta_scale), vcenter=0.0, vmax=float(delta_scale)
+    )
     delta_cmap = LinearSegmentedColormap.from_list(
         "slotting_delta_split",
         ["#08306B", "#4292C6", "#F7FBFF", "#FC9272", "#99000D"],
@@ -372,7 +397,13 @@ def plot_slotting_split_heatmaps(
         fig_h = max(5.5, min(10.5, height * 0.7))
         fig, ax = plt.subplots(figsize=(fig_w, fig_h))
         masked = np.ma.masked_invalid(data_2d)
-        im = ax.imshow(masked, origin="lower", cmap=density_cmap, norm=density_norm, interpolation="nearest")
+        im = ax.imshow(
+            masked,
+            origin="lower",
+            cmap=density_cmap,
+            norm=density_norm,
+            interpolation="nearest",
+        )
 
         _configure_axis_ticks(ax, x_labels=x_labels, y_labels=y_labels)
         _apply_cell_grid(ax, width=width, height=height, alpha=0.24)
@@ -391,7 +422,13 @@ def plot_slotting_split_heatmaps(
         fig_h = max(5.5, min(10.5, height * 0.7))
         fig, ax = plt.subplots(figsize=(fig_w, fig_h))
         masked = np.ma.masked_invalid(delta)
-        im = ax.imshow(masked, origin="lower", cmap=delta_cmap, norm=delta_norm, interpolation="nearest")
+        im = ax.imshow(
+            masked,
+            origin="lower",
+            cmap=delta_cmap,
+            norm=delta_norm,
+            interpolation="nearest",
+        )
 
         _configure_axis_ticks(ax, x_labels=x_labels, y_labels=y_labels)
         _apply_cell_grid(ax, width=width, height=height, alpha=0.24)

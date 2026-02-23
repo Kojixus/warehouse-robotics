@@ -16,16 +16,25 @@ def sha256_file(path: str) -> str:
 
 def _file_entry(path: str) -> dict:
     exists = os.path.exists(path)
-    size_bytes = os.path.getsize(path) if exists else 0
+    is_file = os.path.isfile(path) if exists else False
+    size_bytes = os.path.getsize(path) if is_file else 0
     return {
         "path": path,
         "exists": exists,
         "size_bytes": int(size_bytes),
-        "sha256": sha256_file(path) if exists else "",
+        "sha256": sha256_file(path) if is_file else "",
     }
 
 
-def write_run_manifest(out_path: str, run_id: str, seed: int, inputs: list, outputs: list, extra: dict) -> None:
+def _ensure_parent_dir(out_path: str) -> None:
+    parent = os.path.dirname(out_path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+
+
+def write_run_manifest(
+    out_path: str, run_id: str, seed: int, inputs: list, outputs: list, extra: dict
+) -> None:
     ts = datetime.now(EST_TZ).strftime("%Y-%m-%dT%H:%M:%S EST")
 
     manifest = {
@@ -37,12 +46,14 @@ def write_run_manifest(out_path: str, run_id: str, seed: int, inputs: list, outp
         "environment": extra or {},
     }
 
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    _ensure_parent_dir(out_path)
     with open(out_path, "w", encoding="utf-8") as fp:
         json.dump(manifest, fp, indent=2, sort_keys=True)
 
 
-def write_evidence_index(out_path: str, run_id: str, seed: int, input_files: list, key_outputs: dict) -> None:
+def write_evidence_index(
+    out_path: str, run_id: str, seed: int, input_files: list, key_outputs: dict
+) -> None:
     ts = datetime.now(EST_TZ).strftime("%Y-%m-%dT%H:%M:%S EST")
 
     lines = [
@@ -62,7 +73,7 @@ def write_evidence_index(out_path: str, run_id: str, seed: int, input_files: lis
     lines.extend(
         [
             "",
-            "## Outputs (Evidence )",
+            "## Outputs (Evidence)",
             "",
         ]
     )
@@ -83,6 +94,6 @@ def write_evidence_index(out_path: str, run_id: str, seed: int, input_files: lis
         ]
     )
 
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    _ensure_parent_dir(out_path)
     with open(out_path, "w", encoding="utf-8") as fp:
         fp.write("\n".join(lines))
