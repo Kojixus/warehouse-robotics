@@ -52,7 +52,13 @@ def _load_csv_resilient(path: Path, required_columns: list[str]) -> pd.DataFrame
 
     if df.shape[1] == 1 and "," in str(df.columns[0]):
         repaired_columns = [c.strip().strip('"') for c in str(df.columns[0]).split(",")]
-        repaired = df.iloc[:, 0].astype(str).str.strip().str.strip('"').str.split(",", expand=True)
+        repaired = (
+            df.iloc[:, 0]
+            .astype(str)
+            .str.strip()
+            .str.strip('"')
+            .str.split(",", expand=True)
+        )
         if repaired.shape[1] == len(repaired_columns):
             repaired.columns = repaired_columns
             df = repaired
@@ -61,7 +67,9 @@ def _load_csv_resilient(path: Path, required_columns: list[str]) -> pd.DataFrame
         if df[column_name].dtype == object:
             df[column_name] = df[column_name].astype(str).str.strip().str.strip('"')
 
-    missing = [column_name for column_name in required_columns if column_name not in df.columns]
+    missing = [
+        column_name for column_name in required_columns if column_name not in df.columns
+    ]
     if missing:
         raise ValueError(f"{path.as_posix()} missing required columns: {missing}")
     return df
@@ -79,13 +87,21 @@ def resolve_robot_logs_path() -> Path | None:
     return None
 
 
-def load_inputs() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame | None, Path | None]:
+def load_inputs() -> (
+    tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame | None, Path | None]
+):
     skus = _load_csv_resilient(DATA_DIR / "skus.csv", ["sku", "velocity_per_day"])
     locations = _load_csv_resilient(DATA_DIR / "locations.csv", ["location_id"])
-    orders = _load_csv_resilient(DATA_DIR / "orders.csv", ["order_id", "sku", "pick_location_id"])
+    orders = _load_csv_resilient(
+        DATA_DIR / "orders.csv", ["order_id", "sku", "pick_location_id"]
+    )
 
     robot_logs_path = resolve_robot_logs_path()
-    robot_logs = _load_csv_resilient(robot_logs_path, ["state", "timestamp_min", "duration_min"]) if robot_logs_path else None
+    robot_logs = (
+        _load_csv_resilient(robot_logs_path, ["state", "timestamp_min", "duration_min"])
+        if robot_logs_path
+        else None
+    )
 
     return skus, locations, orders, robot_logs, robot_logs_path
 
@@ -107,7 +123,9 @@ def main() -> None:
     # ---- Build ABC + home locations ----
     sku_abc = build_abc_classes(skus)
     sku_home = infer_sku_home_locations(orders, locations)
-    sku_home = apply_slotting_moves_if_present(sku_home, SLOTTING_MOVE_LIST_PATH.as_posix())
+    sku_home = apply_slotting_moves_if_present(
+        sku_home, SLOTTING_MOVE_LIST_PATH.as_posix()
+    )
 
     # ---- Inventory snapshot ----
     inventory = generate_inventory_snapshot(
@@ -124,14 +142,26 @@ def main() -> None:
     inv_accuracy = pd.DataFrame(
         [
             {
-                "snapshot_est": inventory["snapshot_est"].iloc[0] if not inventory.empty else "",
-                "sku_count": int(inventory["sku"].nunique()) if not inventory.empty else 0,
-                "total_on_hand_units": int(inventory["on_hand_qty"].sum()) if not inventory.empty else 0,
-                "total_reserved_units": int(inventory["reserved_qty"].sum()) if not inventory.empty else 0,
-                "total_available_units": int(inventory["available_qty"].sum()) if not inventory.empty else 0,
-                "total_inventory_value_est": float((inventory["on_hand_qty"] * inventory["unit_cost"]).sum())
-                if not inventory.empty
-                else 0.0,
+                "snapshot_est": (
+                    inventory["snapshot_est"].iloc[0] if not inventory.empty else ""
+                ),
+                "sku_count": (
+                    int(inventory["sku"].nunique()) if not inventory.empty else 0
+                ),
+                "total_on_hand_units": (
+                    int(inventory["on_hand_qty"].sum()) if not inventory.empty else 0
+                ),
+                "total_reserved_units": (
+                    int(inventory["reserved_qty"].sum()) if not inventory.empty else 0
+                ),
+                "total_available_units": (
+                    int(inventory["available_qty"].sum()) if not inventory.empty else 0
+                ),
+                "total_inventory_value_est": (
+                    float((inventory["on_hand_qty"] * inventory["unit_cost"]).sum())
+                    if not inventory.empty
+                    else 0.0
+                ),
             }
         ]
     )

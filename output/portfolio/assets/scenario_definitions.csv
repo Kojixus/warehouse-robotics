@@ -1,7 +1,0 @@
-name,demand_multiplier,robots_available_pct,fault_multiplier,queue_delay_multiplier
-Normal Operations,1.0,1.0,1.0,1.0
-Peak Demand Surge (2x),2.0,1.0,1.0,1.2
-Fleet Availability Reduction (30%),1.0,0.7,1.0,1.1
-Elevated Fault Rate (2x),1.0,1.0,2.0,1.2
-Peak Shift Congestion,1.5,1.0,1.2,1.5
-Compound Disruption Event,2.0,0.7,2.0,1.6
