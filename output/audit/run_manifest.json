@@ -27,7 +27,7 @@
     {
       "exists": true,
       "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/inventory_snapshot.csv",
-      "sha256": "382a34efba89245d54a44fc2d5cb22a7d05db576b8606698b155d3726058dc2e",
+      "sha256": "311b349056eb5d9897de8212fc719c3a5c5bb087f17a6100c89073b087f81f97",
       "size_bytes": 41571
     },
     {
@@ -39,7 +39,7 @@
     {
       "exists": true,
       "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/inventory_accuracy.csv",
-      "sha256": "70a092319a594b52e00e85fe10fedb056b39e7ada2e22aa9b055f7e5e2ab0f0c",
+      "sha256": "138c9841b75ae93a7824b3bbb79cd55ee0b815e5d5feee22ce85d17591054902",
       "size_bytes": 173
     },
     {
@@ -61,7 +61,7 @@
       "size_bytes": 123
     }
   ],
-  "run_id": "run_20260302T125801EST_4532f886",
+  "run_id": "run_20260302T144543EST_4b166032",
   "seed": 42,
-  "timestamp_est": "2026-03-02T12:58:01 EST"
+  "timestamp_est": "2026-03-02T14:45:43 EST"
 }

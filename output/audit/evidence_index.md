@@ -1,7 +1,7 @@
 # Audit Evidence Index
 
-- Run ID: **run_20260302T125801EST_4532f886**
-- Timestamp (EST): **2026-03-02T12:58:01 EST**
+- Run ID: **run_20260302T144543EST_4b166032**
+- Timestamp (EST): **2026-03-02T14:45:43 EST**
 - Seed: **42**
 
 ## Inputs
@@ -14,10 +14,10 @@
 
 - **Inventory snapshot:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/inventory_snapshot.csv`
 - **Cycle counts:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/cycle_counts.csv`
-- **Inventory accuracy summary:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/inventory_accuracy.csv`
-- **Cycle count results summary:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/cycle_count_results.csv`
+- **Inventory summary:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/inventory_accuracy.csv`
+- **Cycle count results:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/cycle_count_results.csv`
 - **Exceptions log:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/exceptions.csv`
-- **Exception SLA summary:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/exception_resolution_sla.csv`
+- **SLA summary:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/exception_resolution_sla.csv`
 - **Run manifest:** `C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/audit/run_manifest.json`
 
 ## What this pack demonstrates
