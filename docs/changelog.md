@@ -10,14 +10,24 @@ This project uses a practical semantic versioning approach:
 
 ---
 
+## [v1.4.4] - 2026-03-02
+
+### Changed
+
+- Switched string literals in `src/audit_ready/audit.py` to single quotes throughout.
+- Kept the literal double-quote character uses (`.strip('"')`) as-is since they’re not double-quoted strings.
+- Introduced `run_id_timestamp` to avoid mixed quoting in the `run_id` f-string.
+
+---
+
 ## [v1.4.3] - 2026-02-20
 
 ### Changed
 
 - **Week 4 folder and path rename to Operations**
-  - Updated runtime entrypoint from `src/control_tower/run_control_tower.py` to `src/operations/run_operations.py`.
-  - Updated pipeline step key from `control_tower` to `operations`.
-  - Added backward-compatible alias: `python main.py control_tower` maps to `operations`.
+  - Updated from `src/control_tower/run_control_tower.py` to `src/operations/run_operations.py`.
+  - Updated `control_tower` to `operations`.
+  - Added backward-compatible : `python main.py control_tower` maps to `operations`.
   - Updated docs/portfolio references to use `src/operations/run_operations.py`.
 
 - **Operations log output path migration**
@@ -25,17 +35,16 @@ This project uses a practical semantic versioning approach:
     - `output/operations_data/simulated/robot_logs.csv`
   - Legacy compatibility path remains available:
     - `output/control_tower_data/simulated/robot_logs.csv`
-  - Downstream modules now check both new and legacy locations.
 
 - **Timezone standardization to EST**
-  - Audit and inventory timestamps now use `EST` labels.
-  - Manifest and inventory timestamp fields were updated:
+  - Audit and inventory timestamps now use `EST`.
+  - Inventory timestamp fields were updated:
     - `timestamp_est`
     - `snapshot_est`
 
 ### Docs
 
-- Refreshed `README.md` with current pipeline modules, commands, and outputs.
+- `README.md` with current pipeline modules, commands, and outputs.
 - Added a visual gallery to `README.md` using generated charts from `output/charts/*`.
 - Added a dedicated `Credits` section to `README.md` with stack and module attribution.
 
@@ -220,4 +229,4 @@ This project uses a practical semantic versioning approach:
 
 ### Notes
 
-- Baseline travel model uses a simplified 2D layout with Manhattan distance to support relative comparisons and portfolio demonstration.
+- Baseline travel model uses a simplified 2D layout with Manhattan equations distance to support relative comparisons and portfolio demonstration.
