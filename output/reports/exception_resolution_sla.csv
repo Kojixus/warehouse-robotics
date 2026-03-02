@@ -1,0 +1,3 @@
+ex_type,count,pct_within_sla,avg_resolution_min,sla_breaches
+DAMAGED,22,68.18,71.64,7
+LOCATION_BLOCKED,14,71.43,44.79,4
