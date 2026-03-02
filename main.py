@@ -16,12 +16,34 @@ class PipelineStep:
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 PIPELINE_STEPS: tuple[PipelineStep, ...] = (
-    PipelineStep("pick_path", "Pick Path Analysis", PROJECT_ROOT / "src" / "pick_path" / "analyze_routes.py"),
-    PipelineStep("slotting", "Slotting Optimization", PROJECT_ROOT / "src" / "slotting" / "run_slotting.py"),
-    PipelineStep("operations", "Operations", PROJECT_ROOT / "src" / "operations" / "run_operations.py"),
-    PipelineStep("scenarios", "Scenario Simulation", PROJECT_ROOT / "src" / "scenarios" / "run_scenarios.py"),
-    PipelineStep("audit_pack", "Audit Pack", PROJECT_ROOT / "src" / "audit_ready" / "run_audit_pack.py"),
-    PipelineStep("portfolio_pack", "Portfolio Pack", PROJECT_ROOT / "src" / "portfolio" / "run_portfolio_pack.py"),
+    PipelineStep(
+        "pick_path",
+        "Pick Path Analysis",
+        PROJECT_ROOT / "src" / "pick_path" / "analyze_routes.py",
+    ),
+    PipelineStep(
+        "slotting",
+        "Slotting Optimization",
+        PROJECT_ROOT / "src" / "slotting" / "heatmap.py",
+    ),
+    PipelineStep(
+        "operations",
+        "Operations",
+        PROJECT_ROOT / "src" / "operations" / "run_operations.py",
+    ),
+    PipelineStep(
+        "scenarios",
+        "Scenario Simulation",
+        PROJECT_ROOT / "src" / "scenarios" / "run_scenarios.py",
+    ),
+    PipelineStep(
+        "audit_pack", "Audit Pack", PROJECT_ROOT / "src" / "audit_ready" / "audit.py"
+    ),
+    PipelineStep(
+        "portfolio_pack",
+        "Portfolio Pack",
+        PROJECT_ROOT / "src" / "portfolio" / "run_portfolio_pack.py",
+    ),
 )
 STEP_ALIASES: dict[str, str] = {
     "control_tower": "operations",
@@ -91,7 +113,11 @@ def select_steps(include: list[str], skip: list[str]) -> list[PipelineStep]:
 
     validate_step_keys(include_set | skip_set)
 
-    selected = [step for step in PIPELINE_STEPS if step.key in include_set and step.key not in skip_set]
+    selected = [
+        step
+        for step in PIPELINE_STEPS
+        if step.key in include_set and step.key not in skip_set
+    ]
     if not selected:
         raise ValueError("No steps selected to run. Check your step filters.")
     return selected
@@ -100,12 +126,17 @@ def select_steps(include: list[str], skip: list[str]) -> list[PipelineStep]:
 def list_steps() -> None:
     print("Available steps:")
     for step in PIPELINE_STEPS:
-        print(f" - {step.key:<13} {step.label} ({step.script_path.relative_to(PROJECT_ROOT).as_posix()})")
+        print(
+            f" - {step.key:<13} {step.label} ({step.script_path.relative_to(PROJECT_ROOT).as_posix()})"
+        )
 
 
 def run_step(step: PipelineStep, python_executable: str, dry_run: bool) -> int:
     if not step.script_path.exists():
-        print(f"[ERROR] Missing script for step '{step.key}': {step.script_path}", file=sys.stderr)
+        print(
+            f"[ERROR] Missing script for step '{step.key}': {step.script_path}",
+            file=sys.stderr,
+        )
         return 2
 
     cmd = [python_executable, str(step.script_path)]
