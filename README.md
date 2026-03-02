@@ -35,6 +35,7 @@ Useful commands:
 ```bash
 python main.py --list
 python main.py operations
+python src/slotting/heatmap.py
 ```
 
 Notes:
