@@ -1,0 +1,67 @@
+{
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_version": "3.14.0"
+  },
+  "inputs": [
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/locations.csv",
+      "sha256": "5ccfe888e5235e0728b9fcb2b1e6adc425db5121d67a4016a82d2bb3d273d0e5",
+      "size_bytes": 12550
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/skus.csv",
+      "sha256": "90cffbb09070b6a09af7ef83b6507db49f61934b0727ab49ba05250739a8b8c6",
+      "size_bytes": 13064
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/orders.csv",
+      "sha256": "f20b8e90f672b6d2737d04d2f26269085e89c28ac325d34edd00369ae3538e39",
+      "size_bytes": 83780
+    }
+  ],
+  "outputs": [
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/inventory_snapshot.csv",
+      "sha256": "382a34efba89245d54a44fc2d5cb22a7d05db576b8606698b155d3726058dc2e",
+      "size_bytes": 41571
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/data/simulated/cycle_counts.csv",
+      "sha256": "0fab607038b837d742db39a37fef8499537075cb30041517822bce1054e91b14",
+      "size_bytes": 2614
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/inventory_accuracy.csv",
+      "sha256": "70a092319a594b52e00e85fe10fedb056b39e7ada2e22aa9b055f7e5e2ab0f0c",
+      "size_bytes": 173
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/cycle_count_results.csv",
+      "sha256": "25d9b00c1656e1e28e09431c38fd6f481f17d874aa87b551188176fec1ffe538",
+      "size_bytes": 103
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/exceptions.csv",
+      "sha256": "a24b5be5d1820c762d2e1c054af35dd984ef5bac0a0eef1a9a8bee55a8bba874",
+      "size_bytes": 5125
+    },
+    {
+      "exists": true,
+      "path": "C:/Users/trifo/Desktop/Projects/Warehouse-robotics/warehouse-robotics/output/reports/exception_resolution_sla.csv",
+      "sha256": "396e2ca9cca4c28deddb902c773d88377c459d5fdd8f3b1695e70dcb365ed6b8",
+      "size_bytes": 123
+    }
+  ],
+  "run_id": "run_20260302T125801EST_4532f886",
+  "seed": 42,
+  "timestamp_est": "2026-03-02T12:58:01 EST"
+}

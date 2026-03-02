@@ -1,0 +1,37 @@
+ex_ID,order_id,sku,location_id,ex_type,severity,time_created,time_resolved,time_resolution,status,role,notes,sla_target_min,within_sla
+EXC00008,ORD0121,SKU0380,C18-07,DAMAGED,WARN,51,171,120,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00032,ORD0732,SKU0032,C12-02,DAMAGED,WARN,53,184,131,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00026,ORD0621,SKU0516,A10-10,DAMAGED,WARN,64,203,139,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00033,ORD0753,SKU0079,C01-01,DAMAGED,WARN,105,204,99,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00025,ORD0608,SKU0478,A12-02,LOCATION_BLOCKED,WARN,106,160,54,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00003,ORD0037,SKU0114,A20-06,LOCATION_BLOCKED,WARN,107,158,51,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00011,ORD0291,SKU0055,A06-04,DAMAGED,WARN,120,133,13,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00013,ORD0294,SKU0491,A07-08,DAMAGED,WARN,125,231,106,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00014,ORD0317,SKU0071,A02-01,DAMAGED,WARN,127,249,122,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00012,ORD0293,SKU0508,C12-02,DAMAGED,WARN,135,219,84,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00010,ORD0274,SKU0435,A19-06,LOCATION_BLOCKED,WARN,140,154,14,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00031,ORD0721,SKU0137,D06-06,DAMAGED,WARN,145,265,120,CLOSED,qa,Unit damaged; re-pick or replace required.,90,False
+EXC00016,ORD0355,SKU0312,B13-01,DAMAGED,WARN,146,207,61,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00006,ORD0082,SKU0208,A02-02,LOCATION_BLOCKED,WARN,147,227,80,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,False
+EXC00015,ORD0354,SKU0367,C18-08,LOCATION_BLOCKED,WARN,170,201,31,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00018,ORD0376,SKU0359,A19-10,LOCATION_BLOCKED,WARN,182,268,86,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,False
+EXC00027,ORD0630,SKU0065,A10-05,DAMAGED,WARN,192,271,79,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00023,ORD0523,SKU0492,C05-10,DAMAGED,WARN,209,290,81,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00005,ORD0049,SKU0168,A14-03,DAMAGED,WARN,219,305,86,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00022,ORD0462,SKU0461,C12-06,DAMAGED,WARN,224,268,44,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00019,ORD0379,SKU0395,B09-05,LOCATION_BLOCKED,WARN,228,303,75,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,False
+EXC00009,ORD0273,SKU0246,A14-03,LOCATION_BLOCKED,WARN,243,273,30,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00030,ORD0707,SKU0119,B19-01,LOCATION_BLOCKED,WARN,295,383,88,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,False
+EXC00024,ORD0606,SKU0501,B01-01,LOCATION_BLOCKED,WARN,301,311,10,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00036,ORD0772,SKU0141,B09-02,DAMAGED,WARN,333,387,54,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00017,ORD0363,SKU0202,A18-05,DAMAGED,WARN,338,370,32,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00002,ORD0022,SKU0092,D05-08,DAMAGED,WARN,354,431,77,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00007,ORD0117,SKU0242,A16-10,DAMAGED,WARN,417,463,46,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00028,ORD0631,SKU0440,D07-02,LOCATION_BLOCKED,WARN,428,471,43,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00021,ORD0400,SKU0476,A10-07,DAMAGED,WARN,431,457,26,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00020,ORD0391,SKU0151,D20-03,DAMAGED,WARN,450,479,29,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00029,ORD0686,SKU0117,B01-01,LOCATION_BLOCKED,WARN,453,479,26,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00001,ORD0002,SKU0273,B13-09,DAMAGED,WARN,455,479,24,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
+EXC00034,ORD0768,SKU0593,C01-09,LOCATION_BLOCKED,WARN,459,479,20,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00035,ORD0768,SKU0520,A05-01,LOCATION_BLOCKED,WARN,460,479,19,CLOSED,floor_lead,Location temporarily inaccessible (congestion/obstruction); reroute or clear.,60,True
+EXC00004,ORD0043,SKU0132,C04-04,DAMAGED,WARN,476,479,3,CLOSED,qa,Unit damaged; re-pick or replace required.,90,True
