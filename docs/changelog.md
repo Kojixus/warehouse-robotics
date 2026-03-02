@@ -10,6 +10,19 @@ This project uses a practical semantic versioning approach:
 
 ---
 
+## [v1.4.5] - 2026-03-02
+
+### Changed
+
+- Consolidated `src/slotting/heatmap_plot.py`, `src/slotting/slotting_logic.py`, and `src/slotting/run_slotting.py` into `src/slotting/heatmap.py`.
+- Updated the slotting entrypoint references to `src/slotting/heatmap.py`.
+
+### Removed
+
+- Legacy slotting wrappers: `src/slotting/heatmap_plot.py`, `src/slotting/slotting_logic.py`, and `src/slotting/run_slotting.py`.
+
+---
+
 ## [v1.4.4] - 2026-03-02
 
 ### Changed
