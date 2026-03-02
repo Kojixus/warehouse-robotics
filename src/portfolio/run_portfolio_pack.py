@@ -1614,7 +1614,7 @@ def build_credits_page_html() -> str:
       <h2>Module Map</h2>
       <ul>
         <li>Week 2 pick path analysis: <code>src/pick_path/analyze_routes.py</code></li>
-        <li>Week 3 slotting optimization: <code>src/slotting/run_slotting.py</code></li>
+        <li>Week 3 slotting optimization: <code>src/slotting/heatmap.py</code></li>
         <li>Week 4 operations metrics: <code>src/operations/run_operations.py</code></li>
         <li>Week 5 audit pack: <code>src/audit_ready/run_audit_pack.py</code></li>
         <li>Week 6 scenario simulation: <code>src/scenarios/run_scenarios.py</code></li>
@@ -1713,7 +1713,7 @@ flowchart LR
 
 ## Pipeline order
 1. `python src/pick_path/analyze_routes.py`
-2. `python src/slotting/run_slotting.py`
+2. `python src/slotting/heatmap.py`
 3. `python src/operations/run_operations.py`
 4. `python src/scenarios/run_scenarios.py`
 5. `python src/audit_ready/run_audit_pack.py`
