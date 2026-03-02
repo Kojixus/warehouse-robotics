@@ -81,20 +81,16 @@ def write_ops_brief(
     if not worst.empty:
         row = worst.iloc[0]
         lines.append(
-            (
-                f"- Lowest utilization: **{row['robot_id']}** at **{row['utilization_pct']:.1f}%** "
-                f"(faults: {int(row.get('fault_events', 0))}, "
-                f"charging: {row.get('charging_pct', 0):.1f}%)"
-            )
+            f"- Lowest utilization: **{row['robot_id']}** at **{row['utilization_pct']:.1f}%** "
+            f"(faults: {int(row.get('fault_events', 0))}, "
+            f"charging: {row.get('charging_pct', 0):.1f}%)"
         )
     if not best.empty:
         row = best.iloc[0]
         lines.append(
-            (
-                f"- Highest utilization: **{row['robot_id']}** at **{row['utilization_pct']:.1f}%** "
-                f"(faults: {int(row.get('fault_events', 0))}, "
-                f"charging: {row.get('charging_pct', 0):.1f}%)"
-            )
+            f"- Highest utilization: **{row['robot_id']}** at **{row['utilization_pct']:.1f}%** "
+            f"(faults: {int(row.get('fault_events', 0))}, "
+            f"charging: {row.get('charging_pct', 0):.1f}%)"
         )
     if worst.empty and best.empty:
         lines.append("- No per-robot KPI data available.")
