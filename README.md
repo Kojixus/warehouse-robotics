@@ -76,6 +76,6 @@ Run `python main.py` first to generate the latest images.
 - Program: warehouse optimization, slotting strategy, operations analytics, audit-readiness, and scenario risk simulation.
 - Code: Python, pandas, numpy, matplotlib.
 - Core pipeline modules: `src/pick_path`, `src/slotting`, `src/operations`, `src/audit_ready`, `src/scenarios`, `src/portfolio`.
-- Portfolio packaging and dashboard generation: `src/portfolio/run_portfolio_pack.py`.
+- Portfolio packaging and dashboard generation: `src/portfolio/portfolio.py`.
 - Additional project credits/help page: `output/portfolio/credits.html`.
 - CodeX: bug fixes and to streamline quick typo's
