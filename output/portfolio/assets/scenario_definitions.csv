@@ -1,0 +1,6 @@
+name,demand_multiplier,robots_available_pct,fault_multiplier,queue_delay_multiplier
+Baseline,1.0,1.0,1.0,1.0
+High Demand,1.2,1.0,1.0,1.1
+Reduced Robots,1.0,0.75,1.0,1.0
+High Faults,1.0,1.0,1.4,1.0
+Optimized Flow,0.95,1.0,0.8,0.9
