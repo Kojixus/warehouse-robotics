@@ -40,13 +40,14 @@ PIPELINE_STEPS: tuple[PipelineStep, ...] = (
         "audit_pack", "Audit Pack", PROJECT_ROOT / "src" / "audit_ready" / "audit.py"
     ),
     PipelineStep(
-        "portfolio_pack",
+        "portfolio",
         "Portfolio Pack",
-        PROJECT_ROOT / "src" / "portfolio" / "run_portfolio_pack.py",
+        PROJECT_ROOT / "src" / "portfolio" / "portfolio.py",
     ),
 )
 STEP_ALIASES: dict[str, str] = {
     "control_tower": "operations",
+    "portfolio_pack": "portfolio",
 }
 
 
