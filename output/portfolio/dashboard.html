@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Warehouse Optimization Portfolio Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --surface: #111823;
+      --surface-soft: #0d1420;
+      --line: #1f2a37;
+      --line-strong: #2d3f51;
+      --text: #e6eaf2;
+      --muted: #98a2b3;
+      --accent: #7dd3fc;
+      --accent-soft: rgba(125, 211, 252, 0.12);
+      --warning-bg: #2a2214;
+      --warning-line: #8a6c3d;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 0%, #122433 0%, transparent 40%),
+        radial-gradient(circle at 100% 0%, #123024 0%, transparent 30%),
+        var(--bg);
+      line-height: 1.45;
+    }
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 16px 42px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      background: linear-gradient(130deg, #121b27 0%, #0f1a26 52%, #101d18 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.2;
+      letter-spacing: 0.2px;
+    }
+    .hero p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 80ch;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .chip {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .chip.accent {
+      color: var(--accent);
+      border-color: rgba(125, 211, 252, 0.35);
+      background: var(--accent-soft);
+    }
+    .jump {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(13, 20, 32, 0.8);
+      padding: 12px;
+      align-self: start;
+    }
+    .jump h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+    }
+    .jump a {
+      display: block;
+      padding: 5px 0;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .jump a:hover {
+      text-decoration: underline;
+    }
+    .warning {
+      margin-top: 14px;
+      border: 1px solid var(--warning-line);
+      border-radius: 14px;
+      background: var(--warning-bg);
+      padding: 14px 16px;
+    }
+    .warning h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .warning p {
+      margin: 8px 0 0;
+      color: #dcc29b;
+    }
+    .warning ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+    .panel {
+      margin-top: 14px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 12px;
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .panel h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .panel-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .kpi-grid {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-soft);
+      padding: 10px;
+    }
+    .kpi .label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+    .kpi .value {
+      margin-top: 5px;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.05;
+    }
+    .impact-grid {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .impact-kpi {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-soft);
+      padding: 10px;
+    }
+    .impact-kpi .label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+    .impact-kpi .value {
+      margin-top: 5px;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .stamp {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .stamp .item {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: #0f1a26;
+      color: #b7c8d9;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .inline-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .inline-list li {
+      margin: 6px 0;
+      color: #cbd8e6;
+    }
+    .changelog {
+      margin-top: 8px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .changelog li {
+      margin: 0 0 8px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0f1724;
+    }
+    .changelog li span {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.2px;
+      color: #8fb8d2;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .changelog li p {
+      margin: 0;
+      color: #d6e3f1;
+      font-size: 13px;
+    }
+    .download-grid {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .download-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-soft);
+      padding: 10px;
+      min-width: 0;
+    }
+    .download-card h3 {
+      margin: 0;
+      font-size: 14px;
+    }
+    .download-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .download-list li {
+      margin: 6px 0;
+    }
+    .download-list a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .download-list a:hover {
+      text-decoration: underline;
+    }
+    .download-list span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      word-break: break-all;
+    }
+    .muted {
+      color: var(--muted);
+      margin: 10px 0 0;
+    }
+    .table-wrap {
+      margin-top: 8px;
+      width: 100%;
+      max-height: 430px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0b0f14;
+    }
+    .table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 12px;
+    }
+    .table th,
+    .table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #1b2735;
+      text-align: left;
+      white-space: nowrap;
+      vertical-align: top;
+    }
+    .table th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #121b27;
+      color: #d8edf8;
+    }
+    .table tr:nth-child(even) td {
+      background: #0f1724;
+    }
+    .viz-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .viz-grid.v3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .viz-grid.v2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .viz-card {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--surface-soft);
+    }
+    .viz-card img {
+      display: block;
+      width: 100%;
+      height: 250px;
+      object-fit: contain;
+      background: #0b0f14;
+      border-bottom: 1px solid var(--line);
+      cursor: zoom-in;
+      transition: transform 140ms ease, filter 140ms ease;
+    }
+    .viz-card img:hover {
+      transform: scale(1.01);
+      filter: brightness(1.04);
+    }
+    .viz-card img:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+    .viz-card figcaption {
+      padding: 8px 10px;
+      color: #afbac9;
+      font-size: 12px;
+    }
+    .viz-empty {
+      min-height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      color: var(--muted);
+      background: #0b0f14;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .split {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .split h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+    .doc-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .doc-link {
+      display: inline-block;
+      padding: 7px 10px;
+      border: 1px solid #2f5160;
+      border-radius: 10px;
+      background: #0f1a26;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .doc-link:hover {
+      text-decoration: underline;
+    }
+    pre {
+      margin: 8px 0 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0b0f14;
+      padding: 10px 12px;
+      font-size: 13px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+    }
+    .mt-10 {
+      margin-top: 10px;
+    }
+    .footer-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(3, 6, 10, 0.86);
+    }
+    .lightbox.open {
+      display: flex;
+    }
+    .lightbox-dialog {
+      position: relative;
+      max-width: min(96vw, 1500px);
+      max-height: 94vh;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      background: #0c1119;
+      overflow: hidden;
+      box-shadow: 0 20px 52px rgba(0, 0, 0, 0.55);
+    }
+    .lightbox img {
+      display: block;
+      width: 100%;
+      max-width: min(96vw, 1450px);
+      max-height: calc(94vh - 56px);
+      object-fit: contain;
+      background: #060a0f;
+    }
+    .lightbox-caption {
+      padding: 9px 12px;
+      border-top: 1px solid var(--line);
+      color: #c5d3e1;
+      font-size: 12px;
+      background: #0f1724;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: 1px solid #345064;
+      border-radius: 9px;
+      background: rgba(11, 16, 24, 0.94);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 9px;
+      cursor: pointer;
+    }
+    .lightbox-close:hover {
+      background: rgba(17, 29, 45, 0.96);
+    }
+    .no-scroll {
+      overflow: hidden;
+    }
+    @media (max-width: 1080px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .impact-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .download-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .viz-grid.v3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 760px) {
+      .wrap {
+        padding: 16px 10px 28px;
+      }
+      .hero h1 {
+        font-size: 24px;
+      }
+      .panel {
+        padding: 12px;
+      }
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+      .impact-grid,
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+      .split,
+      .viz-grid.v3,
+      .viz-grid.v2 {
+        grid-template-columns: 1fr;
+      }
+      .table {
+        min-width: 460px;
+      }
+      .viz-card img {
+        height: 220px;
+      }
+      .lightbox {
+        padding: 8px;
+      }
+      .lightbox-dialog {
+        border-radius: 10px;
+      }
+      .lightbox img {
+        max-height: calc(96vh - 52px);
+      }
+    }
+    </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <h1>Warehouse Optimization and Robotics Operations Portfolio</h1>
+        <p>Consolidated operations view across Weeks 2-6, including audit evidence and scenario risk outputs.</p>
+        <div class="chips">
+          <span class="chip accent">Week 7 Portfolio Pack</span>
+          <span class="chip">Generated: 2026-03-02 22:39 EST</span>
+          <span class="chip">Version: 2.1.0 | artifacts available: 30/30</span>
+        </div>
+      </div>
+      <nav class="jump" aria-label="Quick jump">
+        <h2>Quick Jump</h2>
+        <a href="#executive">Executive Snapshot</a>
+        <a href="#impact">Business Impact</a>
+        <a href="#before-after">Before vs After</a>
+        <a href="#assumptions">Assumptions and Limits</a>
+        <a href="#changelog">Change Log and Version</a>
+        <a href="#week2">Week 2 Pick Path</a>
+        <a href="#week3">Week 3 Slotting</a>
+        <a href="#week4">Week 4 Operations</a>
+        <a href="#week5">Week 5 Audit Pack</a>
+        <a href="#week6">Week 6 Scenario Risk</a>
+        <a href="#downloads">Download Center</a>
+        <a href="#artifacts">Run and Artifacts</a>
+        <a href="credits.html">Credits and Help</a>
+      </nav>
+    </header>
+
+    
+
+    <section id="executive" class="panel">
+      <div class="panel-head">
+        <h2>Executive Snapshot</h2>
+        <p class="panel-note">Key indicators pulled from current report outputs.</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="label">Fleet Utilization (avg)</div><div class="value">41.60%</div></div>
+        <div class="kpi"><div class="label">Fleet Downtime (avg)</div><div class="value">3.02%</div></div>
+        <div class="kpi"><div class="label">Estimated Inventory Value</div><div class="value">$25,330,915</div></div>
+        <div class="kpi"><div class="label">Top Scenario Risk</div><div class="value">100.00%</div></div>
+      </div>
+      <p class="muted">Top scenario by breach probability: <b>High Demand</b></p>
+    </section>
+
+    <section id="impact" class="panel">
+      <div class="panel-head">
+        <h2>Business Impact Panel</h2>
+        <p class="panel-note">Directional financial impact estimate using current portfolio metrics.</p>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-kpi"><div class="label">Travel Improvement (blended)</div><div class="value">6.30%</div></div>
+        <div class="impact-kpi"><div class="label">Labor Minutes Saved / Year</div><div class="value">68,825</div></div>
+        <div class="impact-kpi"><div class="label">Estimated Labor Savings / Year</div><div class="value">$24,089</div></div>
+        <div class="impact-kpi"><div class="label">Downtime Savings / Year</div><div class="value">$131,750</div></div>
+        <div class="impact-kpi"><div class="label">Total Annual Impact</div><div class="value">$155,839</div></div>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-kpi"><div class="label">Payback Period</div><div class="value">9.6 mo</div></div>
+        <div class="impact-kpi"><div class="label">Estimated ROI</div><div class="value">24.67%</div></div>
+        <div class="impact-kpi"><div class="label">Implementation Cost (assumed)</div><div class="value">$125,000</div></div>
+      </div>
+      <p class="muted">Model combines Week 2 and Week 3 travel reductions with Week 4 downtime delta vs assumed baseline.</p>
+    </section>
+
+    <section id="before-after" class="panel">
+      <div class="panel-head">
+        <h2>Before vs After Summary Card</h2>
+        <p class="panel-note">Positive gain indicates improvement (before minus after).</p>
+      </div>
+      <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Area</th>
+      <th>Before</th>
+      <th>After</th>
+      <th>Gain</th>
+      <th>Gain %</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Week 2 Pick Path - Avg Distance</td>
+      <td>49.16 m</td>
+      <td>42.55 m</td>
+      <td>+6.61 m</td>
+      <td>+13.45%</td>
+      <td>kpi_comparison.csv</td>
+    </tr>
+    <tr>
+      <td>Week 3 Slotting - Avg Distance</td>
+      <td>42.70 m</td>
+      <td>41.26 m</td>
+      <td>+1.43 m</td>
+      <td>+3.36%</td>
+      <td>slotting_kpis.csv</td>
+    </tr>
+    <tr>
+      <td>Week 4 Fleet Downtime</td>
+      <td>14.00%</td>
+      <td>3.02%</td>
+      <td>+10.98%</td>
+      <td>+78.42%</td>
+      <td>fleet_daily_kpis.csv + assumption baseline</td>
+    </tr>
+    <tr>
+      <td>Week 6 SLA Breach Risk</td>
+      <td>74.68%</td>
+      <td>68.40%</td>
+      <td>+6.28%</td>
+      <td>+8.41%</td>
+      <td>scenario_summary.csv (baseline: Baseline, best: Optimized Flow)</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+
+    <section id="assumptions" class="panel">
+      <div class="panel-head">
+        <h2>Assumptions and Limits</h2>
+        <p class="panel-note">Context to interpret calculations and comparisons.</p>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Assumptions</h3>
+          <ul class="inline-list"><li>Orders/day assumed: 1,200</li><li>Working days/year assumed: 260</li><li>Baseline pick minutes/order: 3.50</li><li>Labor cost per pick minute: $0.35</li><li>Baseline downtime used for comparison: 14.00%</li><li>Implementation cost estimate: $125,000</li></ul>
+        </div>
+        <div>
+          <h3>Limits</h3>
+          <ul class="inline-list"><li>Business impact values are directional estimates based on simulated outputs.</li><li>No labor scheduling, overtime, equipment depreciation, or tax effects are included.</li><li>Before vs after comparisons rely on available CSV artifacts for the current run only.</li><li>If any upstream files are missing, related calculations show partial or blank values.</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="changelog" class="panel">
+      <div class="panel-head">
+        <h2>Change Log and Version Stamp</h2>
+        <p class="panel-note">Recent portfolio updates and current build metadata.</p>
+      </div>
+      <div class="stamp">
+        <span class="item">Version: 2.1.0</span>
+        <span class="item">Generated: 2026-03-02 22:39 EST</span>
+        <span class="item">Assets Ready: 30/30</span>
+      </div>
+      <ul class="changelog"><li><span>2026-02-18</span><p>Added business impact modeling and before/after summary tables.</p></li><li><span>2026-02-18</span><p>Added assumptions/limits section plus version stamp and changelog panel.</p></li><li><span>2026-02-18</span><p>Added centralized download center and chart image click-to-expand lightbox.</p></li></ul>
+      <div class="doc-links"><a class="doc-link" href="assets/run_manifest.json">run_manifest.json</a></div>
+    </section>
+
+    <section id="week2" class="panel">
+      <div class="panel-head">
+        <h2>Week 2 - Pick Path Optimization</h2>
+        <p class="panel-note">Route performance comparison and visual route snapshots.</p>
+      </div>
+      <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Order ID</th>
+      <th>Num Unique Pick Locations</th>
+      <th>Distance Baseline Random</th>
+      <th>Distance Nearest Neighbor</th>
+      <th>Distance Zone Batch</th>
+      <th>Best Method</th>
+      <th>Best Distance</th>
+      <th>Percent Improvement Vs Baseline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ORD0001</td>
+      <td>3</td>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+      <td>nearest_neighbor</td>
+      <td>34</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0002</td>
+      <td>4</td>
+      <td>84</td>
+      <td>54</td>
+      <td>54</td>
+      <td>nearest_neighbor</td>
+      <td>54</td>
+      <td>35.71</td>
+    </tr>
+    <tr>
+      <td>ORD0003</td>
+      <td>2</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>nearest_neighbor</td>
+      <td>50</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0004</td>
+      <td>2</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>nearest_neighbor</td>
+      <td>44</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0005</td>
+      <td>5</td>
+      <td>60</td>
+      <td>52</td>
+      <td>52</td>
+      <td>nearest_neighbor</td>
+      <td>52</td>
+      <td>13.33</td>
+    </tr>
+    <tr>
+      <td>ORD0006</td>
+      <td>4</td>
+      <td>40</td>
+      <td>36</td>
+      <td>36</td>
+      <td>nearest_neighbor</td>
+      <td>36</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>ORD0007</td>
+      <td>2</td>
+      <td>16</td>
+      <td>16</td>
+      <td>16</td>
+      <td>nearest_neighbor</td>
+      <td>16</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0008</td>
+      <td>4</td>
+      <td>62</td>
+      <td>50</td>
+      <td>50</td>
+      <td>nearest_neighbor</td>
+      <td>50</td>
+      <td>19.35</td>
+    </tr>
+    <tr>
+      <td>ORD0009</td>
+      <td>5</td>
+      <td>60</td>
+      <td>58</td>
+      <td>58</td>
+      <td>nearest_neighbor</td>
+      <td>58</td>
+      <td>3.33</td>
+    </tr>
+    <tr>
+      <td>ORD0010</td>
+      <td>3</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>nearest_neighbor</td>
+      <td>44</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0011</td>
+      <td>2</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>nearest_neighbor</td>
+      <td>44</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0012</td>
+      <td>3</td>
+      <td>28</td>
+      <td>28</td>
+      <td>28</td>
+      <td>nearest_neighbor</td>
+      <td>28</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0013</td>
+      <td>5</td>
+      <td>40</td>
+      <td>38</td>
+      <td>38</td>
+      <td>nearest_neighbor</td>
+      <td>38</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>ORD0014</td>
+      <td>1</td>
+      <td>8</td>
+      <td>8</td>
+      <td>8</td>
+      <td>nearest_neighbor</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0015</td>
+      <td>4</td>
+      <td>42</td>
+      <td>44</td>
+      <td>44</td>
+      <td>baseline_random</td>
+      <td>42</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0016</td>
+      <td>3</td>
+      <td>52</td>
+      <td>34</td>
+      <td>34</td>
+      <td>nearest_neighbor</td>
+      <td>34</td>
+      <td>34.62</td>
+    </tr>
+    <tr>
+      <td>ORD0017</td>
+      <td>2</td>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+      <td>nearest_neighbor</td>
+      <td>34</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0018</td>
+      <td>2</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>nearest_neighbor</td>
+      <td>44</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0019</td>
+      <td>1</td>
+      <td>38</td>
+      <td>38</td>
+      <td>38</td>
+      <td>nearest_neighbor</td>
+      <td>38</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ORD0020</td>
+      <td>5</td>
+      <td>62</td>
+      <td>52</td>
+      <td>52</td>
+      <td>nearest_neighbor</td>
+      <td>52</td>
+      <td>16.13</td>
+    </tr>
+  </tbody>
+</table></div>
+      <div class="viz-grid v3">
+        
+    <figure class="viz-card">
+      <img src="assets/route_baseline.png" alt="Route baseline" loading="lazy" class="expandable-img" data-caption="Baseline route"/>
+      <figcaption>Baseline route</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/route_nearest_neighbor.png" alt="Route nearest neighbor" loading="lazy" class="expandable-img" data-caption="Nearest-neighbor route"/>
+      <figcaption>Nearest-neighbor route</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/route_zone_batch.png" alt="Route zone batch" loading="lazy" class="expandable-img" data-caption="Zone-batch route"/>
+      <figcaption>Zone-batch route</figcaption>
+    </figure>
+    
+      </div>
+      <div class="doc-links"><a class="doc-link" href="assets/pick_path_report.html">pick_path_report.html</a></div>
+    </section>
+
+    <section id="week3" class="panel">
+      <div class="panel-head">
+        <h2>Week 3 - Slotting Optimization</h2>
+        <p class="panel-note">Slotting KPI summary with separate before, after, and delta heatmaps.</p>
+      </div>
+      <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Avg Distance Before</th>
+      <th>Avg Distance After</th>
+      <th>Percent Improvement</th>
+      <th>Orders Analyzed</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>42.695</td>
+      <td>41.2625</td>
+      <td>3.36</td>
+      <td>800</td>
+      <td>nearest_neighbor</td>
+    </tr>
+  </tbody>
+</table></div>
+      <div class="viz-grid v3">
+        
+    <figure class="viz-card">
+      <img src="assets/heatmap_slotting_before.png" alt="Slotting heatmap before" loading="lazy" class="expandable-img" data-caption="Before heatmap"/>
+      <figcaption>Before heatmap</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/heatmap_slotting_after.png" alt="Slotting heatmap after" loading="lazy" class="expandable-img" data-caption="After heatmap"/>
+      <figcaption>After heatmap</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/heatmap_slotting_delta.png" alt="Slotting heatmap delta" loading="lazy" class="expandable-img" data-caption="Delta heatmap (After - Before)"/>
+      <figcaption>Delta heatmap (After - Before)</figcaption>
+    </figure>
+    
+      </div>
+      <div class="doc-links"><a class="doc-link" href="assets/heatmap_slotting_impact.png">slotting_heatmap_combined.png</a></div>
+    </section>
+
+    <section id="week4" class="panel">
+      <div class="panel-head">
+        <h2>Week 4 - Operations</h2>
+        <p class="panel-note">Daily fleet KPIs with utilization and fault trends.</p>
+      </div>
+      <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Fleet Size</th>
+      <th>Shift Minutes</th>
+      <th>Work Min Total</th>
+      <th>Idle Min Total</th>
+      <th>Charge Min Total</th>
+      <th>Fault Min Total</th>
+      <th>Utilization %</th>
+      <th>Downtime %</th>
+      <th>Charging %</th>
+      <th>Tasks Per Hour Proxy</th>
+      <th>Faults Per Robot</th>
+      <th>Mttr Min</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10</td>
+      <td>480</td>
+      <td>1,997</td>
+      <td>1,887</td>
+      <td>771</td>
+      <td>145</td>
+      <td>41.6042</td>
+      <td>3.0208</td>
+      <td>16.0625</td>
+      <td>3.3375</td>
+      <td>1.6</td>
+      <td>7.5</td>
+    </tr>
+  </tbody>
+</table></div>
+      <div class="viz-grid v2">
+        
+    <figure class="viz-card">
+      <img src="assets/utilization_over_time.png" alt="Utilization over time" loading="lazy" class="expandable-img" data-caption="Fleet utilization trend"/>
+      <figcaption>Fleet utilization trend</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/faults_over_time.png" alt="Faults over time" loading="lazy" class="expandable-img" data-caption="Fleet faults trend"/>
+      <figcaption>Fleet faults trend</figcaption>
+    </figure>
+    
+      </div>
+    </section>
+
+    <section id="week5" class="panel">
+      <div class="panel-head">
+        <h2>Week 5 - Audit Pack</h2>
+        <p class="panel-note">Inventory controls, cycle count outcomes, and exception SLA coverage.</p>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Inventory Accuracy</h3>
+          <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Snapshot EST</th>
+      <th>SKU Count</th>
+      <th>Total On Hand Units</th>
+      <th>Total Reserved Units</th>
+      <th>Total Available Units</th>
+      <th>Total Inventory Value Est</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2026-03-02T22:39:54 EST</td>
+      <td>600</td>
+      <td>226,299</td>
+      <td>5,241</td>
+      <td>221,058</td>
+      <td>25,330,914.86</td>
+    </tr>
+  </tbody>
+</table></div>
+        </div>
+        <div>
+          <h3>Exception SLA</h3>
+          <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Ex Type</th>
+      <th>Count</th>
+      <th>Percent Within SLA</th>
+      <th>Avg Resolution Min</th>
+      <th>SLA Breaches</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ROBOT_DELAY</td>
+      <td>14</td>
+      <td>42.86</td>
+      <td>48.36</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>LOCATION_BLOCKED</td>
+      <td>14</td>
+      <td>64.29</td>
+      <td>50.29</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>DAMAGED</td>
+      <td>17</td>
+      <td>88.24</td>
+      <td>54.94</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table></div>
+        </div>
+      </div>
+      <div class="doc-links"><a class="doc-link" href="assets/evidence_index.md">evidence_index.md</a><a class="doc-link" href="assets/run_manifest.json">run_manifest.json</a></div>
+    </section>
+
+    <section id="week6" class="panel">
+      <div class="panel-head">
+        <h2>Week 6 - Scenario Risk</h2>
+        <p class="panel-note">SLA breach exposure and cycle-time/throughput tradeoff across scenarios.</p>
+      </div>
+      <div class='table-wrap'><table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Scenario</th>
+      <th>Runs</th>
+      <th>Avg SLA Breach %</th>
+      <th>Avg P95 Cycle Time Min</th>
+      <th>Avg Throughput Orders Per Hour</th>
+      <th>P95 SLA Breach %</th>
+      <th>Probability SLA Breach GT Threshold %</th>
+      <th>P95 Of P95 Cycle Time Min</th>
+      <th>P95 Throughput Orders Per Hour</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>High Demand</td>
+      <td>200</td>
+      <td>82.98</td>
+      <td>711.73</td>
+      <td>120</td>
+      <td>84.27</td>
+      <td>100</td>
+      <td>730.18</td>
+      <td>120</td>
+    </tr>
+    <tr>
+      <td>Reduced Robots</td>
+      <td>200</td>
+      <td>81.37</td>
+      <td>691.89</td>
+      <td>100</td>
+      <td>82.12</td>
+      <td>100</td>
+      <td>711.58</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>High Faults</td>
+      <td>200</td>
+      <td>75.08</td>
+      <td>473.27</td>
+      <td>100</td>
+      <td>76.12</td>
+      <td>100</td>
+      <td>488.02</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>Baseline</td>
+      <td>200</td>
+      <td>74.68</td>
+      <td>465.90</td>
+      <td>100</td>
+      <td>75.76</td>
+      <td>100</td>
+      <td>480.61</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>Optimized Flow</td>
+      <td>200</td>
+      <td>68.4</td>
+      <td>366.89</td>
+      <td>95</td>
+      <td>70.26</td>
+      <td>100</td>
+      <td>379.93</td>
+      <td>95</td>
+    </tr>
+  </tbody>
+</table></div>
+      <div class="viz-grid v3">
+        
+    <figure class="viz-card">
+      <img src="assets/sla_breach_probability.png" alt="SLA breach probability" loading="lazy" class="expandable-img" data-caption="SLA breach probability"/>
+      <figcaption>SLA breach probability</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/cycle_time_p95_by_scenario.png" alt="Cycle time p95 by scenario" loading="lazy" class="expandable-img" data-caption="Cycle time p95"/>
+      <figcaption>Cycle time p95</figcaption>
+    </figure>
+    
+        
+    <figure class="viz-card">
+      <img src="assets/throughput_by_scenario.png" alt="Throughput by scenario" loading="lazy" class="expandable-img" data-caption="Throughput by scenario"/>
+      <figcaption>Throughput by scenario</figcaption>
+    </figure>
+    
+      </div>
+      <div class="doc-links"><a class="doc-link" href="assets/scenario_risk_report.md">scenario_risk_report.md</a><a class="doc-link" href="assets/ops_brief.md">ops_brief.md</a></div>
+    </section>
+
+    <section id="artifacts" class="panel">
+      <div class="panel-head">
+        <h2>Run and Artifacts</h2>
+        <p class="panel-note">Entry commands and linked outputs for review.</p>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Run Commands</h3>
+          <pre><code>python main.py
+python src/portfolio/portfolio.py</code></pre>
+        </div>
+        <div>
+          <h3>Primary Artifacts</h3>
+          <div class="doc-links"><a class="doc-link" href="assets/evidence_index.md">evidence_index.md</a><a class="doc-link" href="assets/run_manifest.json">run_manifest.json</a><a class="doc-link" href="assets/scenario_risk_report.md">scenario_risk_report.md</a><a class="doc-link" href="assets/ops_brief.md">ops_brief.md</a><a class="doc-link" href="credits.html">credits.html</a></div>
+        </div>
+      </div>
+      <p class="footer-note">Tip: run <code>python main.py</code> first for a full refresh, then regenerate this dashboard.</p>
+    </section>
+
+    <section id="downloads" class="panel">
+      <div class="panel-head">
+        <h2>Download Center</h2>
+        <p class="panel-note">One-click access to available reports, charts, and documentation.</p>
+      </div>
+      <div class="download-grid">
+            <div class="download-card">
+              <h3>Reports</h3>
+              <ul class="download-list"><li><a href="assets/abc_summary.csv" download>ABC Summary</a><span>assets/abc_summary.csv</span></li><li><a href="assets/alerts.csv" download>Alerts</a><span>assets/alerts.csv</span></li><li><a href="assets/cycle_count_results.csv" download>Cycle Count Results</a><span>assets/cycle_count_results.csv</span></li><li><a href="assets/exception_resolution_sla.csv" download>Exception SLA</a><span>assets/exception_resolution_sla.csv</span></li><li><a href="assets/exceptions.csv" download>Exceptions</a><span>assets/exceptions.csv</span></li><li><a href="assets/robot_kpis.csv" download>Fleet KPIs by Robot</a><span>assets/robot_kpis.csv</span></li><li><a href="assets/fleet_daily_kpis.csv" download>Fleet KPIs Daily</a><span>assets/fleet_daily_kpis.csv</span></li><li><a href="assets/inventory_accuracy.csv" download>Inventory Accuracy</a><span>assets/inventory_accuracy.csv</span></li><li><a href="assets/move_list_top50.csv" download>Move List Top 50</a><span>assets/move_list_top50.csv</span></li><li><a href="assets/kpi_comparison.csv" download>Pick Path KPI Comparison</a><span>assets/kpi_comparison.csv</span></li><li><a href="assets/scenario_definitions.csv" download>Scenario Definitions</a><span>assets/scenario_definitions.csv</span></li><li><a href="assets/scenario_summary.csv" download>Scenario Summary</a><span>assets/scenario_summary.csv</span></li><li><a href="assets/slotting_kpis.csv" download>Slotting KPIs</a><span>assets/slotting_kpis.csv</span></li></ul>
+            </div>
+            
+            <div class="download-card">
+              <h3>Charts</h3>
+              <ul class="download-list"><li><a href="assets/cycle_time_p95_by_scenario.png" download>Cycle Time P95</a><span>assets/cycle_time_p95_by_scenario.png</span></li><li><a href="assets/faults_over_time.png" download>Faults Chart</a><span>assets/faults_over_time.png</span></li><li><a href="assets/route_baseline.png" download>Route Baseline</a><span>assets/route_baseline.png</span></li><li><a href="assets/route_nearest_neighbor.png" download>Route Nearest Neighbor</a><span>assets/route_nearest_neighbor.png</span></li><li><a href="assets/route_zone_batch.png" download>Route Zone Batch</a><span>assets/route_zone_batch.png</span></li><li><a href="assets/sla_breach_probability.png" download>SLA Breach Probability</a><span>assets/sla_breach_probability.png</span></li><li><a href="assets/heatmap_slotting_after.png" download>Slotting Heatmap After</a><span>assets/heatmap_slotting_after.png</span></li><li><a href="assets/heatmap_slotting_before.png" download>Slotting Heatmap Before</a><span>assets/heatmap_slotting_before.png</span></li><li><a href="assets/heatmap_slotting_delta.png" download>Slotting Heatmap Delta</a><span>assets/heatmap_slotting_delta.png</span></li><li><a href="assets/heatmap_slotting_impact.png" download>Slotting Impact Heatmap (Combined)</a><span>assets/heatmap_slotting_impact.png</span></li><li><a href="assets/throughput_by_scenario.png" download>Throughput</a><span>assets/throughput_by_scenario.png</span></li><li><a href="assets/utilization_over_time.png" download>Utilization Chart</a><span>assets/utilization_over_time.png</span></li></ul>
+            </div>
+            
+            <div class="download-card">
+              <h3>Documents</h3>
+              <ul class="download-list"><li><a href="credits.html" download>Credits and Help</a><span>credits.html</span></li><li><a href="dashboard.html" download>Dashboard HTML</a><span>dashboard.html</span></li><li><a href="demo_script.md" download>Demo Script</a><span>demo_script.md</span></li><li><a href="assets/evidence_index.md" download>Evidence Index</a><span>assets/evidence_index.md</span></li><li><a href="assets/ops_brief.md" download>Ops Brief</a><span>assets/ops_brief.md</span></li><li><a href="assets/pick_path_report.html" download>Pick Path Report (HTML)</a><span>assets/pick_path_report.html</span></li><li><a href="recruiter_one_pager.md" download>Recruiter One Pager</a><span>recruiter_one_pager.md</span></li><li><a href="assets/run_manifest.json" download>Run Manifest</a><span>assets/run_manifest.json</span></li><li><a href="assets/scenario_risk_report.md" download>Scenario Risk Report</a><span>assets/scenario_risk_report.md</span></li></ul>
+            </div>
+            </div>
+    </section>
+  </div>
+  
+    <div class="lightbox" id="image-lightbox" aria-hidden="true">
+      <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="Expanded chart image">
+        <button type="button" class="lightbox-close" id="image-lightbox-close">Close</button>
+        <img id="image-lightbox-img" alt="" />
+        <div class="lightbox-caption" id="image-lightbox-caption"></div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImg = document.getElementById("image-lightbox-img");
+        const lightboxCaption = document.getElementById("image-lightbox-caption");
+        const closeButton = document.getElementById("image-lightbox-close");
+        if (!lightbox || !lightboxImg || !lightboxCaption || !closeButton) {
+          return;
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove("open");
+          lightbox.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("no-scroll");
+          lightboxImg.removeAttribute("src");
+          lightboxImg.alt = "";
+          lightboxCaption.textContent = "";
+        }
+
+        function openLightbox(source, altText, caption) {
+          if (!source) {
+            return;
+          }
+          lightboxImg.src = source;
+          lightboxImg.alt = altText || caption || "Expanded chart image";
+          lightboxCaption.textContent = caption || altText || "";
+          lightbox.classList.add("open");
+          lightbox.setAttribute("aria-hidden", "false");
+          document.body.classList.add("no-scroll");
+        }
+
+        document.querySelectorAll(".expandable-img").forEach((img) => {
+          img.setAttribute("role", "button");
+          img.setAttribute("tabindex", "0");
+          img.setAttribute("title", "Click to expand");
+
+          img.addEventListener("click", () => {
+            openLightbox(img.getAttribute("src"), img.getAttribute("alt"), img.dataset.caption || "");
+          });
+
+          img.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openLightbox(img.getAttribute("src"), img.getAttribute("alt"), img.dataset.caption || "");
+            }
+          });
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (event) => {
+          if (event.target === lightbox) {
+            closeLightbox();
+          }
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("open")) {
+            closeLightbox();
+          }
+        });
+      })();
+    </script>
+    
+</body>
+</html>
