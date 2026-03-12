@@ -71,6 +71,11 @@ Run `python main.py` first to generate the latest images.
 - `output/`: generated reports, charts, audit files, and portfolio
 - `artifacts/project/`: charter and changelog
 
+## Project Management
+
+- Jira timeline/project board: https://dezsokovi.atlassian.net/jira/core/projects/WOP/timeline?rangeMode=weeks&atlOrigin=eyJpIjoiYjE3ZDY4OGM4ZjFlNGMyODgxMjg2ODc4OWJmZDUxNDQiLCJwIjoiaiJ9
+- Access note: a Jira/Atlassian account with permission to this workspace is required to view the link.
+
 ## Credits
 
 - Program: warehouse optimization, slotting strategy, operations analytics, audit-readiness, and scenario risk simulation.
